@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 
 const authCodeFlowConfig: AuthConfig = {
@@ -37,9 +38,9 @@ export interface UserInfo {
 })
 export class GoogleApiService {
 
-  constructor(private readonly oAuthService: OAuthService) {
+  constructor(private readonly oAuthService: OAuthService, private readonly router: Router) {
   }
-  loginUrl = "/login";
+  loginUrl = "/login/google";
 
 
   tryGoogleLogin() {
@@ -61,6 +62,8 @@ export class GoogleApiService {
         // else load user profile
         if (!this.oAuthService.hasValidAccessToken()) {
           this.oAuthService.initLoginFlow();
+        } else {
+          this.router.navigate([""])
         }
       });
     });
