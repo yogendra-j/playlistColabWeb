@@ -1,47 +1,93 @@
 <section class="vh-100">
-    <div class="container py-5 h-100">
-      <div class="row d-flex align-items-center justify-content-center h-100">
-        <div class="col-md-8 col-lg-7 col-xl-6">
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-            class="img-fluid" alt="Phone image">
-        </div>
-        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-          <form>
-            <!-- Name input -->
-            <div *ngIf="!isLoginForm" class="form-outline mb-4">
-              <label class="form-label" for="name">Name</label>
-              <input type="text" id="name" class="form-control form-control-lg" />
-            </div>
+  <div class="container py-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-7 col-xl-6">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid"
+          alt="Phone image">
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+        <form #loginform="ngForm" novalidate (ngSubmit)="submitForm()">
+          <!-- Name input -->
+          <div *ngIf="!isLoginForm" class="form-group form-outline mb-4">
+            <label class="form-label" for="name">Name</label>
+            <input [(ngModel)]="user.name" name="name" #name="ngModel" required maxlength=40 type="text" id="name"
+              class="form-control form-control-lg" />
 
-            <!-- Email input -->
-            <div class="form-outline mb-4">
-              <label class="form-label" for="email">Email address</label>
-              <input type="email" id="email" class="form-control form-control-lg" />
-            </div>
-  
-            <!-- Password input -->
-            <div class="form-outline mb-2">
-              <label class="form-label" for="password">Password</label>
-              <input type="password" id="password" class="form-control form-control-lg" />
-            </div>
+            <div *ngIf="(name.invalid && (name.dirty || name.touched))" class="alert">
 
-            <div *ngIf="!isLoginForm" class="form-outline mb-2">
-              <label class="form-label" for="confirmPassword">Confirm assword</label>
-              <input type="password" id="confirmPassword" class="form-control form-control-lg" />
+              <div *ngIf="name.errors?.['required']">
+                Name is required.
+              </div>
+              <div *ngIf="name.errors?.['maxlength']">
+                Name must be at least 4 characters long.
+              </div>
             </div>
+          </div>
 
-            <!--toggle forms-->
-            <div class="mb-4 d-flex justify-content-between">
-              <a class="link" (click)="toggleFormType()">{{isLoginForm ? 'Don\'t have an account?' : 'Already have an account?'}}</a>
-              <a class="link ml-auto">Forgot password?</a>
-            </div>
 
-            <div class="d-flex">
-              <!-- Submit button -->
-              <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+          <!-- Email input -->
+          <div class="form-group form-outline mb-4">
+            <label class="form-label" for="email">Email address</label>
+            <input [(ngModel)]="user.email" name="email" #email="ngModel" required email type="email" id="email"
+              class="form-control form-control-lg" />
+
+            <div *ngIf="(email.invalid && (email.dirty || email.touched))" class="alert">
+
+              <div *ngIf="email.errors?.['required']">
+                Email is required.
+              </div>
+              <div *ngIf="email.errors?.['email']">
+                Valid Email is required.
+              </div>
             </div>
-          </form>
-        </div>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-group form-outline mb-2">
+            <label class="form-label" for="password">Password</label>
+            <input [(ngModel)]="user.password" name="password" #password="ngModel" required minlength=6 type="password"
+              id="password" class="form-control form-control-lg" />
+
+            <div *ngIf="(password.invalid && (password.dirty || password.touched))"
+              class="alert">
+
+              <div *ngIf="password.errors?.['required']">
+                Password is required.
+              </div>
+              <div *ngIf="password.errors?.['minlength']">
+                Password must be at least 6 characters long.
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!isLoginForm" class="form-group form-outline mb-2">
+            <label class="form-label" for="confirmPassword">Confirm assword</label>
+            <input type="password" id="confirmPassword" required
+             [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel"
+              name="confirmPassword" class="form-control form-control-lg" />
+            <div *ngIf="!password.invalid && (confirmPassword.dirty || confirmPassword.touched) && user.password !== user.confirmPassword" class="alert">
+
+              <div>
+                Password dosn't match with confirm password
+              </div>
+            </div>
+          </div>
+
+          <!--toggle forms-->
+          <div class="mb-4 d-flex justify-content-between">
+            <a class="link" (click)="toggleFormType()">{{isLoginForm ? 'Don\'t have an account?' : 'Already have an\
+              account?'}}</a>
+            <a class="link ml-auto">Forgot password?</a>
+          </div>
+
+          <div class="d-flex">
+            <!-- Submit button -->
+            <button type="submit" [disabled]="loginform.invalid && user.password !== user.confirmPassword" class="btn btn-primary btn-lg btn-block">
+              Sign in
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-  </section>
+  </div>
+</section>
