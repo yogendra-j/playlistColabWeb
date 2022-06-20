@@ -5,3 +5,7 @@ flex: 1;
 height: 1px;
 background: #eee;
 }
+
+a {
+    cursor: pointer;
+}
