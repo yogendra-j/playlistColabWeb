@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   constructor() { }
+  jwtTokenKey = "PLAYLIST_COLAB_JWT";
   googleTokenKey = "GOOGLE_ACCESS_TOKEN";
   googleTokenExirationKey = "GOOGLE_ACCESS_TOKEN_EXPIRATION";
 
