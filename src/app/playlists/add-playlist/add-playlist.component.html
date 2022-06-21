@@ -1,0 +1,7 @@
+<label class="form-label" for="name">Playlist name</label>
+<input [(ngModel)]="playlist.name" name="name" #name="ngModel" required maxlength="40" type="text" id="email"
+    class="form-control form-control-lg" />
+
+<div *ngIf="name.invalid && isSubmitted" class="alert">
+        Please enter a valid name.
+</div>
