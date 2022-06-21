@@ -6,13 +6,20 @@ import { AuthService } from 'src/app/services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CanActivateLoginPageGuard implements CanActivate {
+export class AuthGuardGuard implements CanActivate {
 
-  constructor(private readonly router: Router, private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService, private readonly router: Router) { }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      return this.authService.islo
+
+      if(this.authService.isJwtTokenValid()){
+        return true;
+      } else {
+        this.router.navigate(['/login']);
+        return false;
+      }
   }
   
 }

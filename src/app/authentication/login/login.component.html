@@ -31,13 +31,16 @@
             <input [(ngModel)]="user.email" name="email" #email="ngModel" required email type="email" id="email"
               class="form-control form-control-lg" />
 
-            <div *ngIf="(email.invalid && (email.dirty || email.touched))" class="alert">
+            <div *ngIf="isLoginFailed || (email.invalid && (email.dirty || email.touched))" class="alert">
 
               <div *ngIf="email.errors?.['required']">
                 Email is required.
               </div>
               <div *ngIf="email.errors?.['email']">
                 Valid Email is required.
+              </div>
+              <div *ngIf="isLoginFailed">
+                Your credentials doesn't match.
               </div>
             </div>
           </div>
@@ -48,7 +51,7 @@
             <input [(ngModel)]="user.password" name="password" #password="ngModel" required minlength=6 type="password"
               id="password" class="form-control form-control-lg" />
 
-            <div *ngIf="(password.invalid && (password.dirty || password.touched))"
+            <div *ngIf="isLoginFailed || (password.invalid && (password.dirty || password.touched))"
               class="alert">
 
               <div *ngIf="password.errors?.['required']">
@@ -56,6 +59,9 @@
               </div>
               <div *ngIf="password.errors?.['minlength']">
                 Password must be at least 6 characters long.
+              </div>
+              <div *ngIf="isLoginFailed">
+                Your credentials doesn't match.
               </div>
             </div>
           </div>
