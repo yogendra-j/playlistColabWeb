@@ -1,6 +1,8 @@
+import { UserLogin } from "./userLogin";
+
 export class Playlist {
     id!: number;
     name!: string;
-    userId!: number;
-    
+    user!: UserLogin;
+
 }

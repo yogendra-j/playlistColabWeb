@@ -1,0 +1,28 @@
+<div class="container-fluid row">
+    <app-playlist-info (openAddSongsModal)="openAddSongsModal()" class="col-3"></app-playlist-info>
+    <app-songs-list class="col-9"></app-songs-list>
+</div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary d-none" #openModalButton data-bs-toggle="modal" data-bs-target="#addSongsModal">
+    Add new playlist
+  </button>
+  
+<!-- Modal -->
+<div class="modal fade" id="addSongsModal" tabindex="-1" aria-labelledby="addSongsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSongsModalLabel">Add songs to playlist</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-add-songs></app-add-songs>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" #closeModalButton data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">crate playlist</button>
+            </div>
+        </div>
+    </div>
+</div>
