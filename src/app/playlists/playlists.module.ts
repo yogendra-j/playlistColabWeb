@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { ViewPlaylistComponent } from './view-playlist/view-playlist.component';
 import { PlaylistInfoComponent } from './view-playlist/playlist-info/playlist-info.component';
 import { SongsListComponent } from './view-playlist/songs-list/songs-list.component';
+import { AddSongsComponent } from './view-playlist/add-songs/add-songs.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { SongsListComponent } from './view-playlist/songs-list/songs-list.compon
     ViewPlaylistComponent,
     PlaylistInfoComponent,
     SongsListComponent,
+    AddSongsComponent,
   ],
   imports: [
     CommonModule,

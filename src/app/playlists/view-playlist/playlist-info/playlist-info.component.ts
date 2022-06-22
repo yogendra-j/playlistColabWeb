@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist';
 
 @Component({
@@ -9,6 +9,7 @@ import { Playlist } from 'src/app/models/playlist';
 export class PlaylistInfoComponent implements OnInit {
 
   @Input() playlist!: Playlist;
+  @Output() openAddSongsModal = new EventEmitter<boolean>();
   constructor() { }
 
   ngOnInit(): void {
