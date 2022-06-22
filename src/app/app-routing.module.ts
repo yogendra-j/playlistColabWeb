@@ -6,7 +6,7 @@ const routes: Routes = [{
   loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
  },
  {
-  path: 'myplaylist',
+  path: 'playlists',
   loadChildren: () => import('./playlists/playlists.module').then(m => m.PlaylistsModule)
  }];
 

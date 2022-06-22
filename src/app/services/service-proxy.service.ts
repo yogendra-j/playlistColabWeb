@@ -30,4 +30,8 @@ export class ServiceProxyService {
   getAllMyPlaylistsApi() {
     return this.httpClient.get<Playlist[]>(baseUrl + '/myplaylists', options);
   }
+
+  getPlaylistByIdApi(id: number) {
+    return this.httpClient.get<Playlist>(baseUrl + '/playlists/' + id, options);
+  }
 }

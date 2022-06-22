@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
   <div class="d-flex flex-row flex-wrap">
-    <div *ngFor="let playlist of myPlaylists | async" class="card m-2" style="width: 15rem;">
+    <div *ngFor="let playlist of myPlaylists | async" class="card m-2" style="width: 15rem;"  [routerLink]="['/playlists', playlist.id]">
       <img src="https://i.ytimg.com/vi/tSsNYRUIrlk/maxresdefault.jpg" class="card-img-top" alt="...">
       <div class="card-body text-center">
         <h5 class="card-title">{{playlist.name}}</h5>
