@@ -10,7 +10,6 @@ import { PlaylistInfoComponent } from './view-playlist/playlist-info/playlist-in
 import { SongsListComponent } from './view-playlist/songs-list/songs-list.component';
 import { AddSongsComponent } from './view-playlist/add-songs/add-songs.component';
 
-
 @NgModule({
   declarations: [
     MyPlaylistsComponent,

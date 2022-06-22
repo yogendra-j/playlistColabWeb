@@ -4,4 +4,5 @@ export class Playlist {
     id!: number;
     name!: string;
     user!: UserLogin;
+
 }
