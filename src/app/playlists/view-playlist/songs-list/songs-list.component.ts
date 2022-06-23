@@ -11,18 +11,18 @@ export class SongsListComponent implements OnInit {
 
   @Input () songsList: Observable<Song[]> = of([]);
   @Input () allowSelection = false;
-  @Output () toggleSelectionForSong = new EventEmitter<string>();
+  @Output () toggleSelectionForSong = new EventEmitter<Song>();
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  toggleSelection(videoId: string, event: Event){
+  toggleSelection(song: Song, event: Event){
     (event.currentTarget as Element).classList.toggle('selected');
     if (!this.allowSelection){
       return;
     }
-    this.toggleSelectionForSong.emit(videoId);
+    this.toggleSelectionForSong.emit(song);
   }
 
 }

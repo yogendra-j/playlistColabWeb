@@ -8,7 +8,15 @@ import { Playlist } from 'src/app/models/playlist';
 })
 export class PlaylistInfoComponent implements OnInit {
 
-  @Input() playlist!: Playlist;
+  @Input() 
+  set playlist(playlist: Playlist | null) {
+    this._playlist = playlist ?? new Playlist();
+  }
+  get playlist(){
+    return this._playlist;
+  }
+
+  private _playlist!: Playlist;
   @Output() openAddSongsModal = new EventEmitter<boolean>();
   constructor() { }
 

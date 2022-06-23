@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { AddSongsDto } from 'src/app/models/addSongsDto';
 import { Song } from 'src/app/models/song';
 import { ServiceProxyService } from 'src/app/services/service-proxy.service';
 
@@ -10,16 +11,16 @@ import { ServiceProxyService } from 'src/app/services/service-proxy.service';
   styleUrls: ['./add-songs.component.css']
 })
 export class AddSongsComponent implements OnInit {
-
+  
   searchUrl!: string;
   songsList: Observable<Song[]> = of([]);
-  songsToAdd: Set<String> = new Set<String>();
-
+  songsToAdd = new Map<string, Song>();
+  
   constructor(private readonly serviceProxy: ServiceProxyService) { }
-
+  
   ngOnInit(): void {
   }
-
+  
   getSongsFromUrl(){
     if (this.searchUrl.includes('youtube.com/watch?v=')){
       console.log(this.searchUrl.split('youtube.com/watch?v=')[1]);
@@ -28,14 +29,18 @@ export class AddSongsComponent implements OnInit {
       this.songsList = this.serviceProxy.getSongsFromYoutubePlaylist(plsylistId);
     }
   }
-
-  toggleSelectionForSong(videoId: string){
-    if (this.songsToAdd.has(videoId)){
-      this.songsToAdd.delete(videoId);
+  
+  toggleSelectionForSong(song: Song){
+    if (this.songsToAdd.has(song.videoId)){
+      this.songsToAdd.delete(song.videoId);
     } else {
-      this.songsToAdd.add(videoId);
+      this.songsToAdd.set(song.videoId, song);
     }
-    console.log(this.songsToAdd);
   }
-
+   
+  addSongsToPlaylist(playlistId: number) {
+    let songsToAddDto = new AddSongsDto();
+    songsToAddDto.songs = Array.from(this.songsToAdd.values());
+    return this.serviceProxy.addSongsToPlaylistApi(playlistId, songsToAddDto);
+  }
 }
