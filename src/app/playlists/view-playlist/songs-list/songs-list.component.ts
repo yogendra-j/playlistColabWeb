@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Song } from 'src/app/models/song';
 
 @Component({
   selector: 'app-songs-list',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SongsListComponent implements OnInit {
 
+  @Input () songsList: Observable<Song[]> = of([]);
+  @Input () allowSelection = false;
+  @Output () toggleSelectionForSong = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  toggleSelection(videoId: string, event: Event){
+    (event.currentTarget as Element).classList.toggle('selected');
+    if (!this.allowSelection){
+      return;
+    }
+    this.toggleSelectionForSong.emit(videoId);
   }
 
 }

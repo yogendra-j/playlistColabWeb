@@ -29,7 +29,6 @@ export class ViewPlaylistComponent implements OnInit {
   }
 
   openAddSongsModal() {
-    console.log('openAddSongsModal', this.openModalButton);
     this.openModalButton.nativeElement.click();
   }
 
