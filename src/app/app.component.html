@@ -4,13 +4,13 @@
         <p routerLink="/login/google">google login..</p>
         <p routerLink="/login">login..</p>
         <p routerLink="/playlists/myplaylists">myplaylist..</p>
-        
+
     </div>
-    
+
     <div class="mb-4 pb-4">
         <router-outlet></router-outlet>
     </div>
-    <div class="fixed-bottom d-flex align-items-center bg-primary text-light p-1">
+    <div class="fixed-bottom d-flex align-items-center bg-primary text-light p-1" [ngClass]="{'d-none': !showPlayer}">
         <app-audio-style-player class=""></app-audio-style-player>
     </div>
 </div>
