@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { JwtInterceptor } from './httpInterceptor/jwt.interceptor';
+import { PlayerModule } from './player/player.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { JwtInterceptor } from './httpInterceptor/jwt.interceptor';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    PlayerModule,
     OAuthModule.forRoot()
   ],
   providers: [
