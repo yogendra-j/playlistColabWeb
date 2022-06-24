@@ -1,6 +1,16 @@
-<p routerLink="/login/google">google login..</p>
-<p routerLink="/login">login..</p>
-<p routerLink="/playlists/myplaylists">myplaylist..</p>
+<div class="container-fluid row">
 
-
-<router-outlet></router-outlet>
+    <div class="d-flex justify-content-around p-2 mb-2 sticky-top bg-dark text-light">
+        <p routerLink="/login/google">google login..</p>
+        <p routerLink="/login">login..</p>
+        <p routerLink="/playlists/myplaylists">myplaylist..</p>
+        
+    </div>
+    
+    <div class="mb-4 pb-4">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="fixed-bottom d-flex align-items-center bg-primary text-light p-1">
+        <app-audio-style-player class=""></app-audio-style-player>
+    </div>
+</div>

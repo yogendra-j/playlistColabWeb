@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   isLoginForm = true;
   isLoginFailed = false;
   user: UserLogin = new UserLogin();
-  constructor(private readonly serviceProxy: ServiceProxyService, 
+  constructor(private readonly serviceProxy: ServiceProxyService,
     private readonly authService: AuthService,
     private readonly router: Router) { }
 
@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm() {
+    debugger;
     if(this.isLoginForm)
       this.serviceProxy.loginApi(this.user).subscribe(token => {
         this.authService.setJwtToken(token);

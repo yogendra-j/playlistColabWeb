@@ -3,12 +3,12 @@
         <img src="https://i.ytimg.com/vi/tSsNYRUIrlk/maxresdefault.jpg" class="mw-100" alt="...">
     </div>
     <div class="h1">
-        <span>playlist.name</span>
+        <span>{{playlist?.name}}</span>
     </div>
-    <div class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around align-items-center">
         <p class="txt3">
             <span>
-                45
+                {{playlist?.songs?.length}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-file-earmark-music" viewBox="0 0 16 16">
                     <path
@@ -46,6 +46,6 @@
             facere aspernatur commodi?</p>
     </div>
     <div>
-        <span>playlist.user.email</span>
+        <span>{{playlist?.user?.email}}</span>
     </div>
 </div>

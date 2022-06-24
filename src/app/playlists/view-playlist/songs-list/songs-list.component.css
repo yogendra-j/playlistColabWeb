@@ -1,0 +1,9 @@
+.songRow:hover{
+    background-color: #ffebeb;
+}
+.songRow.selected{
+    background-color: #ffc0cb;
+}
+.songRow.selected:hover{
+    background-color: #ffc0cb;
+}
