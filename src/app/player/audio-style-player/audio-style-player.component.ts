@@ -7,7 +7,7 @@ import { PlaySongServiceService } from 'src/app/services/play-song-service.servi
   styleUrls: ['./audio-style-player.component.css'],
 })
 export class AudioStylePlayerComponent implements OnInit {
-  @Input() currenlyPlaying!: Song;
+ currenlyPlaying!: Song;
   currentPlayerState!: YT.PlayerState;
   youtubePlayer!: YT.Player;
   isPlayerReady = false;
@@ -15,8 +15,24 @@ export class AudioStylePlayerComponent implements OnInit {
   constructor(private readonly songService: PlaySongServiceService) {}
 
   ngOnInit(): void {
+    this.handlePressPlayInSongsList();
+    this.handlePressPauseInSongsList();
+  }
+
+  private handlePressPauseInSongsList() {
+    this.songService.pauseSong.subscribe(() => {
+      if (this.isPlayerReady) {
+        this.youtubePlayer.pauseVideo();
+      }
+    });
+  }
+
+  private handlePressPlayInSongsList() {
     this.songService.songToPlayNow.subscribe(song => {
-      console.log(song);
+      if (song.videoId === this.currenlyPlaying?.videoId) {
+        this.playPauseVideo();
+        return;
+      }
       this.currenlyPlaying = song;
       if (this.isPlayerReady) {
         this.youtubePlayer.loadVideoById(song.videoId);
@@ -29,7 +45,7 @@ export class AudioStylePlayerComponent implements OnInit {
     if (event === YT.PlayerState.CUED) {
       return;
     }
-    this.songService.currentPlayerState.next({
+    this.songService.currentPlayerState.emit({
       isPlaying: this.isPlayerReady && event === YT.PlayerState.PLAYING,
       isPaused: this.isPlayerReady && (event === YT.PlayerState.PAUSED || event === YT.PlayerState.ENDED || event === YT.PlayerState.UNSTARTED),
       isLoading: !this.isPlayerReady || event === YT.PlayerState.BUFFERING,
