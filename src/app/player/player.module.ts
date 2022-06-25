@@ -5,6 +5,7 @@ import { PlayerRoutingModule } from './player-routing.module';
 import { AudioStylePlayerComponent } from './audio-style-player/audio-style-player.component';
 import { YoutubePlayerComponent } from './youtube-player/youtube-player.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { SharedModuleModule } from '../shared-module/shared-module.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
   imports: [
     CommonModule,
     PlayerRoutingModule,
-    YouTubePlayerModule
+    YouTubePlayerModule,
+    SharedModuleModule
   ],
   exports: [
     AudioStylePlayerComponent
