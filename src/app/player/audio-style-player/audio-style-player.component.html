@@ -1,7 +1,11 @@
 <div class="container-fluid d-flex align-items-center">
   <a class="btn" type="button" (click)="playPauseVideo()">
     <!-- play icon -->
-    <div *ngIf="isPlayerReady && currentPlayerState !== 3 && currentPlayerState !== 1">
+    <div
+      *ngIf="
+        isPlayerReady && currentPlayerState !== 3 && currentPlayerState !== 1
+      "
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -86,21 +90,33 @@
       </svg>
     </div>
     <!-- loading -->
-    <div *ngIf="!isPlayerReady || currentPlayerState === 3" class="spinner-border text-info" role="status">
+    <div
+      *ngIf="!isPlayerReady || currentPlayerState === 3"
+      class="spinner-border text-info"
+      role="status"
+    >
       <span class="visually-hidden">Loading...</span>
     </div>
   </a>
 
   <div class="progress flex-grow-1 mx-4">
-    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [attr.aria-valuenow]="songProgress"  aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': songProgress + '%' }"></div>
+    <div
+      class="progress-bar"
+      role="progressbar"
+      [attr.aria-valuenow]="songProgress"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [ngStyle]="{ width: songProgress + '%' }"
+    ></div>
   </div>
   <div>
     <span>
-      {{songDuration | minuteSeconds}}
+      {{ songDuration | minuteSeconds }}
     </span>
   </div>
 </div>
-<app-youtube-player class="d-none"
+<app-youtube-player
+  class="d-none"
   (youtubePlayer)="setYouTubePlayer($event)"
   (StateChange)="handlePlayerStateChange($event)"
   [currentlyPlaying]="currenlyPlaying"
