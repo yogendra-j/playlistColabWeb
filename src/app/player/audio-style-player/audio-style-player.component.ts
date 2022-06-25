@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { interval } from 'rxjs/internal/observable/interval';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { Song } from 'src/app/models/song';
 import { PlaySongServiceService } from 'src/app/services/play-song-service.service';
 @Component({
@@ -6,17 +8,29 @@ import { PlaySongServiceService } from 'src/app/services/play-song-service.servi
   templateUrl: './audio-style-player.component.html',
   styleUrls: ['./audio-style-player.component.css'],
 })
-export class AudioStylePlayerComponent implements OnInit {
+export class AudioStylePlayerComponent implements OnInit, OnDestroy {
  currenlyPlaying!: Song;
   currentPlayerState!: YT.PlayerState;
   youtubePlayer!: YT.Player;
   isPlayerReady = false;
+  songProgress = 0;
+  songDuration = 1;
+  intervallTimer = interval(500);
+  subscriptions: Subscription[] = [];
 
   constructor(private readonly songService: PlaySongServiceService) {}
 
   ngOnInit(): void {
     this.handlePressPlayInSongsList();
     this.handlePressPauseInSongsList();
+    this.subscriptions.push(this.intervallTimer.subscribe(() => {
+      this.updateProgressBar();
+    }));
+
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   private handlePressPauseInSongsList() {
@@ -35,8 +49,9 @@ export class AudioStylePlayerComponent implements OnInit {
       }
       this.currenlyPlaying = song;
       if (this.isPlayerReady) {
-        this.youtubePlayer.loadVideoById(song.videoId);
-        this.youtubePlayer.playVideo();
+        this.youtubePlayer.loadVideoById(song.videoId); //load new song
+        this.youtubePlayer.playVideo();  //play new song
+        this.songDuration = this.youtubePlayer.getDuration();
       }
     });
   }
@@ -66,5 +81,12 @@ export class AudioStylePlayerComponent implements OnInit {
   setYouTubePlayer(player: YT.Player) {
     this.youtubePlayer = player;
     this.isPlayerReady = true;
+  }
+
+  updateProgressBar(){
+    if (this.currentPlayerState === YT.PlayerState.PLAYING) {
+      this.songDuration = this.youtubePlayer.getDuration();
+      this.songProgress = (this.youtubePlayer.getCurrentTime() / this.songDuration) * 100;
+    }
   }
 }
