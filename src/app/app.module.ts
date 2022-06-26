@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { JwtInterceptor } from './httpInterceptor/jwt.interceptor';
 import { PlayerModule } from './player/player.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PlayerModule } from './player/player.module';
     HttpClientModule,
     AppRoutingModule,
     PlayerModule,
-    OAuthModule.forRoot()
+    OAuthModule.forRoot(),
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

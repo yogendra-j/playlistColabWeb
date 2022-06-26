@@ -1,12 +1,15 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatSliderChange } from '@angular/material/slider';
 import { interval } from 'rxjs/internal/observable/interval';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Song } from 'src/app/models/song';
 import { PlaySongServiceService } from 'src/app/services/play-song-service.service';
+import { MinuteSecondsPipe } from 'src/app/shared-module/pipes/minute-seconds.pipe';
 @Component({
   selector: 'app-audio-style-player',
   templateUrl: './audio-style-player.component.html',
   styleUrls: ['./audio-style-player.component.css'],
+  providers: [MinuteSecondsPipe]
 })
 export class AudioStylePlayerComponent implements OnInit, OnDestroy {
  currenlyPlaying!: Song;
@@ -18,7 +21,9 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
   intervallTimer = interval(500);
   subscriptions: Subscription[] = [];
 
-  constructor(private readonly songService: PlaySongServiceService) {}
+  constructor(private readonly songService: PlaySongServiceService,
+    private formatToMinSecPipe: MinuteSecondsPipe) {
+    }
 
   ngOnInit(): void {
     this.handlePressPlayInSongsList();
@@ -85,8 +90,16 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
 
   updateProgressBar(){
     if (this.currentPlayerState === YT.PlayerState.PLAYING) {
-      this.songDuration = this.youtubePlayer.getDuration();
-      this.songProgress = (this.youtubePlayer.getCurrentTime() / this.songDuration) * 100;
+      this.songProgress = this.youtubePlayer.getCurrentTime();
     }
+  }
+
+  seekTo(event: MatSliderChange) {
+    if (event.value == null) return;
+    this.youtubePlayer.seekTo(event.value, true);
+  }
+
+  formatLabel = (value: number) => {
+    return this.formatToMinSecPipe.transform(value);
   }
 }

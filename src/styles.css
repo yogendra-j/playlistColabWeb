@@ -2,3 +2,26 @@
 .alert {
     color: red;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* mat slider thumb style */
+/* 1. hide thumb if not hovering, to not show on focus */
+mat-slider:not(:hover) .mat-slider-thumb-label, mat-slider:not(:hover) .mat-slider-thumb-label-text {
+    display: none;
+}
+/* 2. show on hover */
+mat-slider:hover .mat-slider-thumb-label {
+  transform: rotate(45deg) !important;
+  border-radius: 80% 50% 0 !important;
+  width: 2rem !important;
+  height: 2rem !important;
+}
+
+mat-slider:hover .mat-slider-thumb {
+  transform: scale(0) !important;
+}
+
+mat-slider:hover .mat-slider-thumb-label-text {
+  opacity: 1 !important;
+}
