@@ -92,6 +92,9 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
     if (this.currentPlayerState === YT.PlayerState.PLAYING) {
       this.songProgress = this.youtubePlayer.getCurrentTime();
     }
+    if (!this.songDuration) {
+      this.songDuration = this.youtubePlayer.getDuration();
+    }
   }
 
   seekTo(event: MatSliderChange) {
