@@ -94,13 +94,18 @@
       <span class="visually-hidden">Loading...</span>
     </div>
   </a>
+  <div>
+    <span>
+      {{ songProgress | minuteSeconds }}
+    </span>
+  </div>
 
   <div class="flex-grow-1 mx-4">
     <mat-slider class="w-100" [disabled]="currentPlayerState !== 1 && currentPlayerState !== 2"
       thumbLabel="true"
       [displayWith]="formatLabel"
       [(ngModel)]="songProgress"
-      tickInterval="songDuration"
+      tickInterval="songDuration * 2"
       (input)="seekTo($event)"
       step="songDuration"
       min="0"

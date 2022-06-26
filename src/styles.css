@@ -1,14 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 .alert {
-    color: red;
+  color: red;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* mat slider thumb style */
 /* 1. hide thumb if not hovering, to not show on focus */
-mat-slider:not(:hover) .mat-slider-thumb-label, mat-slider:not(:hover) .mat-slider-thumb-label-text {
-    display: none;
+mat-slider:not(:hover) .mat-slider-thumb-label,
+mat-slider:not(:hover) .mat-slider-thumb-label-text {
+  display: none;
 }
 /* 2. show on hover */
 mat-slider:hover .mat-slider-thumb-label {
