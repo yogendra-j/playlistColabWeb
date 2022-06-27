@@ -281,12 +281,10 @@
       </div>
       <!-- pregress bar -->
       <div
-        class="col-10 align-items-center fit-content-height"
-        (mousemove)="pregressBarMouseEnterHandler($event)"
-        (mouseleave)="pregressBarMouseLeaveHandler($event)"
+        class="col-10 align-items-center fit-content-height tooltipProgressBar"
       >
         <mat-slider
-          class="w-100 tooltipProgressBar align-items-center align-self-center p-0"
+          class="w-100 align-items-center align-self-center p-0"
           [disabled]="currentPlayerState !== 1 && currentPlayerState !== 2"
           [ngModel]="songProgress"
           tickInterval="1"
@@ -295,7 +293,7 @@
           [max]="songDuration"
           aria-label="units"
         ></mat-slider>
-        <span class="tooltiptextProgressBar">Tooltip text</span>
+        <app-tooltip [songDuration]="songDuration"></app-tooltip>
       </div>
       <!-- song duration -->
       <div class="col-1">
