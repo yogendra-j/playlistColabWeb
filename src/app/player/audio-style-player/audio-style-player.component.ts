@@ -18,7 +18,7 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
   isPlayerReady = false;
   songProgress = 0;
   songDuration = 1;
-  intervallTimer = interval(500);
+  intervallTimer = interval(1000);
   subscriptions: Subscription[] = [];
 
   constructor(private readonly songService: PlaySongServiceService,
@@ -105,4 +105,39 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
   formatLabel = (value: number) => {
     return this.formatToMinSecPipe.transform(value);
   }
+
+  // show hover time value in progress bar
+  pregressBarMouseEnterHandler(event: MouseEvent) {
+    const progressBarWrapper = document.querySelector('.mat-slider-track-wrapper') as HTMLElement;
+    if (progressBarWrapper) {
+      const progressBarWrapperRect = progressBarWrapper.getBoundingClientRect();
+      const progressBarWidth = progressBarWrapperRect.right - progressBarWrapperRect.left;
+      const progressBarX = event.clientX - progressBarWrapperRect.left;
+      const progressBarPercent = progressBarX / progressBarWidth;
+      const progressBarTime = this.songDuration * progressBarPercent;
+      const progressBarTimeFormatted = this.formatToMinSecPipe.transform(progressBarTime);
+      const tooltipElement = document.querySelector('.tooltiptextProgressBar') as HTMLElement;
+      if (tooltipElement) {
+        tooltipElement.innerText = progressBarTimeFormatted;
+        //set position of tooltip if time is valid
+        if (progressBarTime > 0 && progressBarTime < this.songDuration) {
+          tooltipElement.style.left = `${event.clientX - parseInt(this.getStyle(document.querySelector('.container-fluid') as HTMLElement, 'padding-left'))}px`;
+        } else {
+          tooltipElement.style.left = '-300px';
+        }
+      }
+    }
+  }
+  // hide hover time value in progress bar
+  pregressBarMouseLeaveHandler(event: MouseEvent) {
+    const tootltipElement = document.querySelector('.tooltiptextProgressBar') as HTMLElement;
+    if (tootltipElement) {
+      tootltipElement.innerText = '';
+      tootltipElement.style.left = '-300px';
+    }
+  }
+
+  getStyle(element: HTMLElement, style: string){
+    return window.getComputedStyle(element, null).getPropertyValue(style);
+}
 }

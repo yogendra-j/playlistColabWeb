@@ -1,4 +1,29 @@
-.songBarIcon{
+.songBarIcon {
   width: 40px;
   height: 40px;
+}
+/* Tooltip text */
+.tooltiptextProgressBar {
+  width: 4rem;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem 0;
+  border-radius: 0.5rem;
+  top: -2rem;
+
+  position: absolute;
+  z-index: 1;
+  left: -300px;
+}
+/* Tooltip arrow */
+.tooltiptextProgressBar::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -0.5rem;
+  border-width: 0.5rem;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
 }

@@ -1,12 +1,14 @@
-<div class="container-fluid d-flex align-items-center" style="height: 3rem;">
+<div class="container-fluid d-flex align-items-center" style="height: 3rem">
   <a class="btn" type="button" (click)="playPauseVideo()">
     <!-- play icon -->
-    <div class="songBarIcon"
+    <div
+      class="songBarIcon"
       *ngIf="
         isPlayerReady && currentPlayerState !== 3 && currentPlayerState !== 1
       "
     >
-      <svg class="songBarIcon"
+      <svg
+        class="songBarIcon"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
         version="1.1"
@@ -42,7 +44,8 @@
     </div>
     <!-- pause icon -->
     <div class="songBarIcon" *ngIf="isPlayerReady && currentPlayerState === 1">
-      <svg class="songBarIcon"
+      <svg
+        class="songBarIcon"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
         version="1.1"
@@ -100,18 +103,22 @@
     </span>
   </div>
 
-  <div class="flex-grow-1 mx-4">
-    <mat-slider class="w-100" [disabled]="currentPlayerState !== 1 && currentPlayerState !== 2"
-      thumbLabel="true"
-      [displayWith]="formatLabel"
-      [(ngModel)]="songProgress"
-      tickInterval="songDuration * 2"
+  <div
+    class="flex-grow-1 mx-4 tooltipProgressBar"
+    (mousemove)="pregressBarMouseEnterHandler($event)"
+    (mouseleave)="pregressBarMouseLeaveHandler($event)"
+  >
+    <mat-slider
+      class="w-100 "
+      [disabled]="currentPlayerState !== 1 && currentPlayerState !== 2"
+      [ngModel]="songProgress"
+      tickInterval="1"
       (input)="seekTo($event)"
-      step="songDuration"
       min="0"
-      max="songDuration"
+      [max]="songDuration"
       aria-label="units"
     ></mat-slider>
+    <span class="tooltiptextProgressBar">Tooltip text</span>
   </div>
   <div>
     <span>
