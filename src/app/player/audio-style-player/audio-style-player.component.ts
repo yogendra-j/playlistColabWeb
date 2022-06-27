@@ -9,10 +9,11 @@ import { MinuteSecondsPipe } from 'src/app/shared-module/pipes/minute-seconds.pi
   selector: 'app-audio-style-player',
   templateUrl: './audio-style-player.component.html',
   styleUrls: ['./audio-style-player.component.css'],
-  providers: [MinuteSecondsPipe]
+  providers: [MinuteSecondsPipe],
 })
 export class AudioStylePlayerComponent implements OnInit, OnDestroy {
- currenlyPlaying!: Song;
+  queuedSongs: Song[] = [];
+  currenlyPlaying!: Song;
   currentPlayerState!: YT.PlayerState;
   youtubePlayer!: YT.Player;
   isPlayerReady = false;
@@ -22,21 +23,23 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
   volumn = 100;
   subscriptions: Subscription[] = [];
 
-  constructor(private readonly songService: PlaySongServiceService,
-    private formatToMinSecPipe: MinuteSecondsPipe) {
-    }
+  constructor(
+    private readonly songService: PlaySongServiceService,
+    private formatToMinSecPipe: MinuteSecondsPipe
+  ) {}
 
   ngOnInit(): void {
     this.handlePressPlayInSongsList();
     this.handlePressPauseInSongsList();
-    this.subscriptions.push(this.intervallTimer.subscribe(() => {
-      this.updateProgressBar();
-    }));
-
+    this.subscriptions.push(
+      this.intervallTimer.subscribe(() => {
+        this.updateProgressBar();
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   private handlePressPauseInSongsList() {
@@ -48,7 +51,7 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
   }
 
   private handlePressPlayInSongsList() {
-    this.songService.songToPlayNow.subscribe(song => {
+    this.songService.songToPlayNow.subscribe((song) => {
       if (song.videoId === this.currenlyPlaying?.videoId) {
         this.playPauseVideo();
         return;
@@ -56,7 +59,7 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
       this.currenlyPlaying = song;
       if (this.isPlayerReady) {
         this.youtubePlayer.loadVideoById(song.videoId); //load new song
-        this.youtubePlayer.playVideo();  //play new song
+        this.youtubePlayer.playVideo(); //play new song
         this.songDuration = this.youtubePlayer.getDuration();
       }
     });
@@ -68,10 +71,14 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
     }
     this.songService.currentPlayerState.emit({
       isPlaying: this.isPlayerReady && event === YT.PlayerState.PLAYING,
-      isPaused: this.isPlayerReady && (event === YT.PlayerState.PAUSED || event === YT.PlayerState.ENDED || event === YT.PlayerState.UNSTARTED),
+      isPaused:
+        this.isPlayerReady &&
+        (event === YT.PlayerState.PAUSED ||
+          event === YT.PlayerState.ENDED ||
+          event === YT.PlayerState.UNSTARTED),
       isLoading: !this.isPlayerReady || event === YT.PlayerState.BUFFERING,
       songInPlayer: this.currenlyPlaying,
-    })
+    });
 
     this.currentPlayerState = event;
   }
@@ -89,7 +96,7 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
     this.isPlayerReady = true;
   }
 
-  updateProgressBar(){
+  updateProgressBar() {
     if (this.currentPlayerState === YT.PlayerState.PLAYING) {
       this.songProgress = this.youtubePlayer.getCurrentTime();
     }
@@ -119,27 +126,40 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
 
   formatLabel = (value: number) => {
     return this.formatToMinSecPipe.transform(value);
-  }
+  };
 
   // show hover time value in progress bar
   pregressBarMouseEnterHandler(event: MouseEvent) {
-    const progressBarWrapper = document.querySelector('.mat-slider-ticks') as HTMLElement;
+    const progressBarWrapper = document.querySelector(
+      '.mat-slider-ticks'
+    ) as HTMLElement;
     if (progressBarWrapper) {
       const progressBarWrapperRect = progressBarWrapper.getBoundingClientRect();
-      const progressBarWidth = progressBarWrapperRect.right - progressBarWrapperRect.left;
+      const progressBarWidth =
+        progressBarWrapperRect.right - progressBarWrapperRect.left;
       const progressBarX = event.clientX - progressBarWrapperRect.left;
       const progressBarPercent = progressBarX / progressBarWidth;
       const progressBarTime = this.songDuration * progressBarPercent;
-      const progressBarTimeFormatted = this.formatToMinSecPipe.transform(progressBarTime);
-      const tooltipElement = document.querySelector('.tooltiptextProgressBar') as HTMLElement;
+      const progressBarTimeFormatted =
+        this.formatToMinSecPipe.transform(progressBarTime);
+      const tooltipElement = document.querySelector(
+        '.tooltiptextProgressBar'
+      ) as HTMLElement;
       const isBelowSlider = event.clientY > progressBarWrapperRect.bottom;
-      console.log(tooltipElement.style.top);
       if (tooltipElement) {
         tooltipElement.innerText = progressBarTimeFormatted;
         //set position of tooltip if time is valid
         if (progressBarTime > 0 && progressBarTime < this.songDuration) {
-          tooltipElement.style.left = `${event.clientX - parseInt(this.getStyle(document.querySelector('.container-fluid') as HTMLElement, 'padding-left'))}px`;
-          tooltipElement.style.top = `${isBelowSlider ? 2.8: 4.5}rem`;
+          tooltipElement.style.left = `${
+            event.clientX -
+            parseInt(
+              this.getStyle(
+                document.querySelector('.container-fluid') as HTMLElement,
+                'padding-left'
+              )
+            )
+          }px`;
+          tooltipElement.style.top = `${isBelowSlider ? 2.8 : 4.5}rem`;
         } else {
           tooltipElement.style.left = '-300px';
         }
@@ -148,14 +168,16 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
   }
   // hide hover time value in progress bar
   pregressBarMouseLeaveHandler(event: MouseEvent) {
-    const tootltipElement = document.querySelector('.tooltiptextProgressBar') as HTMLElement;
+    const tootltipElement = document.querySelector(
+      '.tooltiptextProgressBar'
+    ) as HTMLElement;
     if (tootltipElement) {
       tootltipElement.innerText = '';
       tootltipElement.style.left = '-300px';
     }
   }
 
-  getStyle(element: HTMLElement, style: string){
+  getStyle(element: HTMLElement, style: string) {
     return window.getComputedStyle(element, null).getPropertyValue(style);
-}
+  }
 }
