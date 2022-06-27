@@ -1,29 +1,50 @@
 .songBarIcon {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 }
+.song-thumbnail{
+  max-width: 8rem;
+}
+.volumn-control-icon {
+  width: 1rem;
+  height: 1rem;
+}
+.mat-slider{
+  cursor: pointer;
+}
+.volumn-control:not(:hover)  .volumn-slider {
+  display: none;
+ }
 /* Tooltip text */
 .tooltiptextProgressBar {
-  width: 4rem;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.12rem .25rem;
   background-color: black;
   color: #fff;
   text-align: center;
-  padding: 0.5rem 0;
   border-radius: 0.5rem;
-  top: -2rem;
-
+  top: 1.4rem;
+  font-size: xx-small;
   position: absolute;
   z-index: 1;
   left: -300px;
 }
 /* Tooltip arrow */
-.tooltiptextProgressBar::after {
+/* .tooltiptextProgressBar::after {
   content: " ";
   position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
+  top: 100%;
   left: 50%;
   margin-left: -0.5rem;
   border-width: 0.5rem;
   border-style: solid;
   border-color: black transparent transparent transparent;
+} */
+.fit-content-width{
+  max-width: fit-content;
 }
+.fit-content-hight{
+  max-height: fit-content;
+}
+

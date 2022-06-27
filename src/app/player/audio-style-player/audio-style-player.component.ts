@@ -19,6 +19,7 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
   songProgress = 0;
   songDuration = 1;
   intervallTimer = interval(1000);
+  volumn = 100;
   subscriptions: Subscription[] = [];
 
   constructor(private readonly songService: PlaySongServiceService,
@@ -97,6 +98,20 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
     }
   }
 
+  setVolumn(event: MatSliderChange) {
+    if (event.value == null) return;
+    this.youtubePlayer.setVolume(event.value);
+  }
+
+  toggleVolumn() {
+    if (this.volumn === 0) {
+      this.volumn = 100;
+    } else {
+      this.volumn = 0;
+    }
+    this.youtubePlayer.setVolume(this.volumn);
+  }
+
   seekTo(event: MatSliderChange) {
     if (event.value == null) return;
     this.youtubePlayer.seekTo(event.value, true);
@@ -108,7 +123,7 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
 
   // show hover time value in progress bar
   pregressBarMouseEnterHandler(event: MouseEvent) {
-    const progressBarWrapper = document.querySelector('.mat-slider-track-wrapper') as HTMLElement;
+    const progressBarWrapper = document.querySelector('.mat-slider-ticks') as HTMLElement;
     if (progressBarWrapper) {
       const progressBarWrapperRect = progressBarWrapper.getBoundingClientRect();
       const progressBarWidth = progressBarWrapperRect.right - progressBarWrapperRect.left;
@@ -117,11 +132,14 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
       const progressBarTime = this.songDuration * progressBarPercent;
       const progressBarTimeFormatted = this.formatToMinSecPipe.transform(progressBarTime);
       const tooltipElement = document.querySelector('.tooltiptextProgressBar') as HTMLElement;
+      const isBelowSlider = event.clientY > progressBarWrapperRect.bottom;
+      console.log(tooltipElement.style.top);
       if (tooltipElement) {
         tooltipElement.innerText = progressBarTimeFormatted;
         //set position of tooltip if time is valid
         if (progressBarTime > 0 && progressBarTime < this.songDuration) {
           tooltipElement.style.left = `${event.clientX - parseInt(this.getStyle(document.querySelector('.container-fluid') as HTMLElement, 'padding-left'))}px`;
+          tooltipElement.style.top = `${isBelowSlider ? 2.8: 4.5}rem`;
         } else {
           tooltipElement.style.left = '-300px';
         }

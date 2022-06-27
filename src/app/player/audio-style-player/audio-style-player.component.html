@@ -1,129 +1,347 @@
-<div class="container-fluid d-flex align-items-center" style="height: 3rem">
-  <a class="btn" type="button" (click)="playPauseVideo()">
-    <!-- play icon -->
-    <div
-      class="songBarIcon"
-      *ngIf="
-        isPlayerReady && currentPlayerState !== 3 && currentPlayerState !== 1
-      "
-    >
-      <svg
-        class="songBarIcon"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        version="1.1"
-        id="Layer_1"
-        x="0px"
-        y="0px"
-        viewBox="0 0 502.119 502.119"
-        style="enable-background: new 0 0 502.119 502.119"
-        xml:space="preserve"
-      >
-        <g>
-          <g>
-            <path
-              style="fill: #4d93e8"
-              d="M131.743,17.904L421.08,213.57c26.539,17.947,26.539,57.031,0,74.978L131.743,484.215    c-30.055,20.325-70.609-1.207-70.609-37.489V55.393C61.134,19.111,101.688-2.421,131.743,17.904z"
-            />
-            <path
-              d="M106.489,502.119c-8.834,0-17.716-2.185-26.01-6.589c-18.375-9.756-29.345-28-29.345-48.804V55.393    c0-20.804,10.97-39.048,29.345-48.804c18.373-9.756,39.634-8.622,56.865,3.032l289.337,195.667    c15.218,10.291,24.303,27.402,24.303,45.772s-9.085,35.481-24.303,45.772L137.345,492.498    C127.892,498.891,117.226,502.119,106.489,502.119z M106.454,20.05c-5.637,0-11.304,1.394-16.596,4.204    c-11.725,6.225-18.724,17.866-18.724,31.14v391.333c0,13.274,6.999,24.915,18.724,31.14c11.723,6.226,25.287,5.501,36.283-1.935    l289.337-195.667c9.854-6.664,15.506-17.309,15.506-29.205c0-11.896-5.651-22.541-15.506-29.205L126.142,26.188    C120.109,22.109,113.304,20.05,106.454,20.05z"
-            />
-          </g>
-          <g>
-            <path
-              d="M351.051,216.06c-1.932,0-3.882-0.558-5.602-1.723l-16.236-11.003c-4.571-3.098-5.767-9.316-2.668-13.888    c3.1-4.572,9.316-5.765,13.889-2.668l16.236,11.003c4.571,3.098,5.767,9.316,2.668,13.888    C357.404,214.522,354.256,216.06,351.051,216.06z"
-            />
-          </g>
-          <g>
-            <path
-              d="M304.051,184.209c-1.932,0-3.882-0.558-5.602-1.723l-195-132.149c-4.571-3.099-5.767-9.316-2.668-13.888    c3.1-4.572,9.316-5.765,13.889-2.668l195,132.149c4.571,3.099,5.767,9.316,2.668,13.888    C310.404,182.671,307.256,184.209,304.051,184.209z"
-            />
-          </g>
-        </g>
-      </svg>
-    </div>
-    <!-- pause icon -->
-    <div class="songBarIcon" *ngIf="isPlayerReady && currentPlayerState === 1">
-      <svg
-        class="songBarIcon"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        version="1.1"
-        id="Layer_1"
-        x="0px"
-        y="0px"
-        viewBox="0 0 502 502"
-        style="enable-background: new 0 0 502 502"
-        xml:space="preserve"
-      >
-        <g>
-          <g>
-            <path
-              style="fill: #4d93e8"
-              d="M149,492L149,492c-28.167,0-51-22.833-51-51V61c0-28.166,22.833-51,51-51h0    c28.167,0,51,22.833,51,51v380C200,469.167,177.167,492,149,492z"
-            />
-            <path
-              d="M149,502c-33.636,0-61-27.364-61-61V61c0-33.636,27.364-61,61-61s61,27.364,61,61v380C210,474.636,182.636,502,149,502z     M149,20c-22.607,0-41,18.393-41,41v380c0,22.607,18.393,41,41,41s41-18.393,41-41V61C190,38.393,171.607,20,149,20z"
-            />
-          </g>
-          <g>
-            <path
-              style="fill: #4d93e8"
-              d="M353,492L353,492c-28.167,0-51-22.833-51-51V61c0-28.166,22.833-51,51-51h0    c28.166,0,51,22.833,51,51v380C404,469.167,381.167,492,353,492z"
-            />
-            <path
-              d="M353,502c-33.636,0-61-27.364-61-61V61c0-33.636,27.364-61,61-61s61,27.364,61,61v380C414,474.636,386.636,502,353,502z     M353,20c-22.607,0-41,18.393-41,41v380c0,22.607,18.393,41,41,41s41-18.393,41-41V61C394,38.393,375.607,20,353,20z"
-            />
-          </g>
-          <g>
-            <path
-              d="M130,90.613c-5.523,0-10-4.477-10-10V61c0-5.523,4.477-10,10-10s10,4.477,10,10v19.613    C140,86.136,135.523,90.613,130,90.613z"
-            />
-          </g>
-          <g>
-            <path
-              d="M130,363.335c-5.523,0-10-4.477-10-10v-235.56c0-5.523,4.477-10,10-10s10,4.477,10,10v235.56    C140,358.858,135.523,363.335,130,363.335z"
-            />
-          </g>
-        </g>
-      </svg>
-    </div>
-    <!-- loading -->
-    <div
-      *ngIf="!isPlayerReady || currentPlayerState === 3"
-      class="spinner-border text-info songBarIcon"
-      role="status"
-    >
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </a>
-  <div>
-    <span>
-      {{ songProgress | minuteSeconds }}
-    </span>
+<div class="container-fluid d-flex align-items-center ps-0">
+  <!-- song thubnail and name -->
+  <div class="song-info d-flex align-items-center ml-0">
+    <img
+      class="song-thumbnail me-2"
+      src="{{ currenlyPlaying?.thumbnailUrlLow }}"
+      alt=""
+    />
+    <div class="song-name">{{ currenlyPlaying?.title }}</div>
   </div>
+  <!-- middle part -->
+  <div class="middle-controls container align-items-center justify-content-center mx-4 px-4">
+    <div class="track-controls row justify-content-center">
+      <!-- prev -->
+      <a class="btn fit-content-width" *ngIf="isPlayerReady"
+        ><svg
+          class="songBarIcon"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+          width="1000"
+          height="1000"
+          viewBox="0 0 1000 1000"
+          xml:space="preserve"
+        >
+          <desc>Created with Fabric.js 3.5.0</desc>
+          <defs></defs>
+          <rect
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            fill="rgba(255,255,255,0)"
+          />
+          <g transform="matrix(-1.7756 0 0 -1.7756 500 500)" id="724326">
+            <g style="" vector-effect="non-scaling-stroke">
+              <g transform="matrix(1.02 0 0 1.02 0.0042 -0.0043)" id="Layer_1">
+                <path
+                  style="
+                    stroke: none;
+                    stroke-width: 1;
+                    stroke-dasharray: none;
+                    stroke-linecap: butt;
+                    stroke-dashoffset: 0;
+                    stroke-linejoin: miter;
+                    stroke-miterlimit: 4;
+                    is-custom-font: none;
+                    font-file-url: none;
+                    fill: rgb(77, 147, 232);
+                    fill-rule: nonzero;
+                    opacity: 1;
+                  "
+                  transform=" translate(-250.9878, -250.9765)"
+                  d="M 150.329 491.976 c 10.156 0 20.31 -3.874 28.058 -11.622 l 201.319 -201.319 c 15.496 -15.496 15.496 -40.62 0 -56.117 L 178.387 21.599 c -15.496 -15.496 -40.62 -15.496 -56.117 0 s -15.496 40.62 0 56.117 l 173.26 173.261 L 122.27 424.237 c -15.496 15.496 -15.496 40.62 0 56.117 C 130.018 488.102 140.173 491.976 150.329 491.976 z"
+                  stroke-linecap="round"
+                />
+              </g>
+              <g transform="matrix(1.02 0 0 1.02 0.0046 0.0077)" id="Layer_1">
+                <path
+                  style="
+                    stroke: none;
+                    stroke-width: 1;
+                    stroke-dasharray: none;
+                    stroke-linecap: butt;
+                    stroke-dashoffset: 0;
+                    stroke-linejoin: miter;
+                    stroke-miterlimit: 4;
+                    is-custom-font: none;
+                    font-file-url: none;
+                    fill: rgb(0, 0, 0);
+                    fill-rule: nonzero;
+                    opacity: 1;
+                  "
+                  transform=" translate(-250.988, -250.9879)"
+                  d="M 150.329 501.976 c -13.271 0 -25.746 -5.167 -35.13 -14.551 c -9.384 -9.384 -14.552 -21.86 -14.552 -35.13 s 5.168 -25.746 14.552 -35.13 l 166.189 -166.189 L 115.199 84.787 c -9.384 -9.384 -14.552 -21.86 -14.552 -35.13 s 5.168 -25.746 14.552 -35.13 c 19.372 -19.37 50.889 -19.369 70.259 0 l 201.319 201.319 c 9.384 9.384 14.552 21.86 14.552 35.13 s -5.168 25.746 -14.552 35.13 L 185.458 487.426 C 176.074 496.809 163.599 501.976 150.329 501.976 z M 150.329 19.976 c -7.929 0 -15.382 3.087 -20.987 8.693 c -5.606 5.606 -8.694 13.06 -8.694 20.987 s 3.088 15.381 8.694 20.987 l 173.26 173.261 c 3.905 3.905 3.905 10.237 0 14.142 l -173.26 173.261 c -5.606 5.606 -8.694 13.06 -8.694 20.987 s 3.088 15.381 8.694 20.987 c 5.605 5.606 13.06 8.693 20.987 8.693 s 15.381 -3.087 20.986 -8.693 l 201.319 -201.319 c 5.606 -5.606 8.694 -13.06 8.694 -20.987 s -3.088 -15.381 -8.694 -20.987 L 171.315 28.67 C 165.71 23.064 158.257 19.976 150.329 19.976 z"
+                  stroke-linecap="round"
+                />
+              </g>
+              <g transform="matrix(1.02 0 0 1.02 94.874 -22.333)" id="Layer_1">
+                <path
+                  style="
+                    stroke: none;
+                    stroke-width: 1;
+                    stroke-dasharray: none;
+                    stroke-linecap: butt;
+                    stroke-dashoffset: 0;
+                    stroke-linejoin: miter;
+                    stroke-miterlimit: 4;
+                    is-custom-font: none;
+                    font-file-url: none;
+                    fill: rgb(0, 0, 0);
+                    fill-rule: nonzero;
+                    opacity: 1;
+                  "
+                  transform=" translate(-344.004, -229.0917)"
+                  d="M 350.988 245.976 c -2.536 0 -5.071 -0.958 -7.02 -2.878 L 330 229.33 c -3.934 -3.877 -3.979 -10.208 -0.103 -14.142 c 3.879 -3.934 10.209 -3.979 14.142 -0.103 l 13.969 13.768 c 3.934 3.877 3.979 10.208 0.103 14.142 C 356.153 244.981 353.571 245.976 350.988 245.976 z"
+                  stroke-linecap="round"
+                />
+              </g>
+              <g
+                transform="matrix(1.02 0 0 1.02 -17.7264 -133.5513)"
+                id="Layer_1"
+              >
+                <path
+                  style="
+                    stroke: none;
+                    stroke-width: 1;
+                    stroke-dasharray: none;
+                    stroke-linecap: butt;
+                    stroke-dashoffset: 0;
+                    stroke-linejoin: miter;
+                    stroke-miterlimit: 4;
+                    is-custom-font: none;
+                    font-file-url: none;
+                    fill: rgb(0, 0, 0);
+                    fill-rule: nonzero;
+                    opacity: 1;
+                  "
+                  transform=" translate(-233.606, -120.0487)"
+                  d="M 310.787 206.121 c -2.535 0 -5.071 -0.958 -7.02 -2.878 L 149.406 51.099 c -3.934 -3.877 -3.979 -10.208 -0.103 -14.142 c 3.879 -3.934 10.208 -3.979 14.142 -0.103 l 154.361 152.145 c 3.934 3.877 3.979 10.208 0.103 14.142 C 315.952 205.126 313.37 206.121 310.787 206.121 z"
+                  stroke-linecap="round"
+                />
+              </g>
+            </g>
+          </g>
+        </svg>
+      </a>
+      <!-- plsy/pause controls -->
+      <a class="btn fit-content-width mx-3" type="button" (click)="playPauseVideo()">
+        <!-- play icon -->
+        <div
+          class="songBarIcon"
+          *ngIf="
+            isPlayerReady &&
+            currentPlayerState !== 3 &&
+            currentPlayerState !== 1
+          "
+        >
+          <svg
+            class="songBarIcon"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            id="Layer_1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 502.119 502.119"
+            style="enable-background: new 0 0 502.119 502.119"
+            xml:space="preserve"
+          >
+            <g>
+              <g>
+                <path
+                  style="fill: #4d93e8"
+                  d="M131.743,17.904L421.08,213.57c26.539,17.947,26.539,57.031,0,74.978L131.743,484.215    c-30.055,20.325-70.609-1.207-70.609-37.489V55.393C61.134,19.111,101.688-2.421,131.743,17.904z"
+                />
+                <path
+                  d="M106.489,502.119c-8.834,0-17.716-2.185-26.01-6.589c-18.375-9.756-29.345-28-29.345-48.804V55.393    c0-20.804,10.97-39.048,29.345-48.804c18.373-9.756,39.634-8.622,56.865,3.032l289.337,195.667    c15.218,10.291,24.303,27.402,24.303,45.772s-9.085,35.481-24.303,45.772L137.345,492.498    C127.892,498.891,117.226,502.119,106.489,502.119z M106.454,20.05c-5.637,0-11.304,1.394-16.596,4.204    c-11.725,6.225-18.724,17.866-18.724,31.14v391.333c0,13.274,6.999,24.915,18.724,31.14c11.723,6.226,25.287,5.501,36.283-1.935    l289.337-195.667c9.854-6.664,15.506-17.309,15.506-29.205c0-11.896-5.651-22.541-15.506-29.205L126.142,26.188    C120.109,22.109,113.304,20.05,106.454,20.05z"
+                />
+              </g>
+              <g>
+                <path
+                  d="M351.051,216.06c-1.932,0-3.882-0.558-5.602-1.723l-16.236-11.003c-4.571-3.098-5.767-9.316-2.668-13.888    c3.1-4.572,9.316-5.765,13.889-2.668l16.236,11.003c4.571,3.098,5.767,9.316,2.668,13.888    C357.404,214.522,354.256,216.06,351.051,216.06z"
+                />
+              </g>
+              <g>
+                <path
+                  d="M304.051,184.209c-1.932,0-3.882-0.558-5.602-1.723l-195-132.149c-4.571-3.099-5.767-9.316-2.668-13.888    c3.1-4.572,9.316-5.765,13.889-2.668l195,132.149c4.571,3.099,5.767,9.316,2.668,13.888    C310.404,182.671,307.256,184.209,304.051,184.209z"
+                />
+              </g>
+            </g>
+          </svg>
+        </div>
+        <!-- pause icon -->
+        <div
+          class="songBarIcon"
+          *ngIf="isPlayerReady && currentPlayerState === 1"
+        >
+          <svg
+            class="songBarIcon"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            id="Layer_1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 502 502"
+            style="enable-background: new 0 0 502 502"
+            xml:space="preserve"
+          >
+            <g>
+              <g>
+                <path
+                  style="fill: #4d93e8"
+                  d="M149,492L149,492c-28.167,0-51-22.833-51-51V61c0-28.166,22.833-51,51-51h0    c28.167,0,51,22.833,51,51v380C200,469.167,177.167,492,149,492z"
+                />
+                <path
+                  d="M149,502c-33.636,0-61-27.364-61-61V61c0-33.636,27.364-61,61-61s61,27.364,61,61v380C210,474.636,182.636,502,149,502z     M149,20c-22.607,0-41,18.393-41,41v380c0,22.607,18.393,41,41,41s41-18.393,41-41V61C190,38.393,171.607,20,149,20z"
+                />
+              </g>
+              <g>
+                <path
+                  style="fill: #4d93e8"
+                  d="M353,492L353,492c-28.167,0-51-22.833-51-51V61c0-28.166,22.833-51,51-51h0    c28.166,0,51,22.833,51,51v380C404,469.167,381.167,492,353,492z"
+                />
+                <path
+                  d="M353,502c-33.636,0-61-27.364-61-61V61c0-33.636,27.364-61,61-61s61,27.364,61,61v380C414,474.636,386.636,502,353,502z     M353,20c-22.607,0-41,18.393-41,41v380c0,22.607,18.393,41,41,41s41-18.393,41-41V61C394,38.393,375.607,20,353,20z"
+                />
+              </g>
+              <g>
+                <path
+                  d="M130,90.613c-5.523,0-10-4.477-10-10V61c0-5.523,4.477-10,10-10s10,4.477,10,10v19.613    C140,86.136,135.523,90.613,130,90.613z"
+                />
+              </g>
+              <g>
+                <path
+                  d="M130,363.335c-5.523,0-10-4.477-10-10v-235.56c0-5.523,4.477-10,10-10s10,4.477,10,10v235.56    C140,358.858,135.523,363.335,130,363.335z"
+                />
+              </g>
+            </g>
+          </svg>
+        </div>
+        <!-- loading -->
+        <div
+          *ngIf="!isPlayerReady || currentPlayerState === 3"
+          class="spinner-border text-info songBarIcon"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </a>
+      <!-- next -->
+      <a class="btn fit-content-width" *ngIf="isPlayerReady"
+        >
+        <svg class="songBarIcon"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+          id="Layer_1"
+          x="0px"
+          y="0px"
+          viewBox="0 0 501.976 501.976"
+          style="enable-background: new 0 0 501.976 501.976"
+          xml:space="preserve"
+          width="512"
+          height="512"
+        >
+          <g>
+            <g>
+              <g>
+                <path
+                  style="fill: #4d93e8"
+                  d="M150.329,491.976c10.156,0,20.31-3.874,28.058-11.622l201.319-201.319     c15.496-15.496,15.496-40.62,0-56.117L178.387,21.599c-15.496-15.496-40.62-15.496-56.117,0s-15.496,40.62,0,56.117     l173.26,173.261L122.27,424.237c-15.496,15.496-15.496,40.62,0,56.117C130.018,488.102,140.173,491.976,150.329,491.976z"
+                />
+                <path
+                  d="M150.329,501.976c-13.271,0-25.746-5.167-35.13-14.551c-9.384-9.384-14.552-21.86-14.552-35.13     s5.168-25.746,14.552-35.13l166.189-166.189L115.199,84.787c-9.384-9.384-14.552-21.86-14.552-35.13s5.168-25.746,14.552-35.13     c19.372-19.37,50.889-19.369,70.259,0l201.319,201.319c9.384,9.384,14.552,21.86,14.552,35.13s-5.168,25.746-14.552,35.13     L185.458,487.426C176.074,496.809,163.599,501.976,150.329,501.976z M150.329,19.976c-7.929,0-15.382,3.087-20.987,8.693     c-5.606,5.606-8.694,13.06-8.694,20.987s3.088,15.381,8.694,20.987l173.26,173.261c3.905,3.905,3.905,10.237,0,14.142     l-173.26,173.261c-5.606,5.606-8.694,13.06-8.694,20.987s3.088,15.381,8.694,20.987c5.605,5.606,13.06,8.693,20.987,8.693     s15.381-3.087,20.986-8.693l201.319-201.319c5.606-5.606,8.694-13.06,8.694-20.987s-3.088-15.381-8.694-20.987L171.315,28.67     C165.71,23.064,158.257,19.976,150.329,19.976z"
+                />
+              </g>
+            </g>
+            <g>
+              <path
+                d="M350.988,245.976c-2.536,0-5.071-0.958-7.02-2.878L330,229.33c-3.934-3.877-3.979-10.208-0.103-14.142    c3.879-3.934,10.209-3.979,14.142-0.103l13.969,13.768c3.934,3.877,3.979,10.208,0.103,14.142    C356.153,244.981,353.571,245.976,350.988,245.976z"
+              />
+            </g>
+            <g>
+              <path
+                d="M310.787,206.121c-2.535,0-5.071-0.958-7.02-2.878L149.406,51.099c-3.934-3.877-3.979-10.208-0.103-14.142    c3.879-3.934,10.208-3.979,14.142-0.103l154.361,152.145c3.934,3.877,3.979,10.208,0.103,14.142    C315.952,205.126,313.37,206.121,310.787,206.121z"
+              />
+            </g>
+          </g>
+        </svg>
+      </a>
+    </div>
+    <!-- track timeline related -->
+    <div class="track-timeline row justify-content-center align-items-center">
+      <!-- current time -->
+      <div class="col-1">
+        <span>
+          {{ songProgress | minuteSeconds }}
+        </span>
+      </div>
+      <!-- pregress bar -->
+      <div
+        class="col-10 align-items-center fit-content-height"
+        (mousemove)="pregressBarMouseEnterHandler($event)"
+        (mouseleave)="pregressBarMouseLeaveHandler($event)"
+      >
+        <mat-slider
+          class="w-100 tooltipProgressBar align-items-center align-self-center p-0"
+          [disabled]="currentPlayerState !== 1 && currentPlayerState !== 2"
+          [ngModel]="songProgress"
+          tickInterval="1"
+          (input)="seekTo($event)"
+          min="0"
+          [max]="songDuration"
+          aria-label="units"
+        ></mat-slider>
+        <span class="tooltiptextProgressBar">Tooltip text</span>
+      </div>
+      <!-- song duration -->
+      <div class="col-1">
+        <span>
+          {{ songDuration | minuteSeconds }}
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- volumn -->
+  <div class="volumn-control d-flex align-items-center mx-4">
+    <a (click)="toggleVolumn()">
+      <svg
+        class="volumn-control-icon"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+      >
+        <polygon
+          points="38,15 40,15 40,85 38,85 15,60 4,60 4,40 15,40 "
+          style="fill: black; fill-opacity: 0.7; stroke: black; stroke-width: 2"
+        />
 
-  <div
-    class="flex-grow-1 mx-4 tooltipProgressBar"
-    (mousemove)="pregressBarMouseEnterHandler($event)"
-    (mouseleave)="pregressBarMouseLeaveHandler($event)"
-  >
+        <path
+          d="m 51,24 c 16,15 16,38 1,53"
+          style="fill: none; stroke: #333333; stroke-width: 7"
+        />
+        <path
+          d="m 62,14 c 37,38 1,73 1,73"
+          style="fill: none; stroke: #444444; stroke-width: 7"
+        />
+        <path
+          d="M 72,5 C 120,54 73,97 73,97"
+          style="fill: none; stroke: #666666; stroke-width: 7"
+        />
+      </svg>
+    </a>
     <mat-slider
-      class="w-100 "
+      class="volumn-slider"
       [disabled]="currentPlayerState !== 1 && currentPlayerState !== 2"
-      [ngModel]="songProgress"
-      tickInterval="1"
-      (input)="seekTo($event)"
+      [ngModel]="volumn"
+      (input)="setVolumn($event)"
       min="0"
-      [max]="songDuration"
+      max="100"
       aria-label="units"
     ></mat-slider>
-    <span class="tooltiptextProgressBar">Tooltip text</span>
-  </div>
-  <div>
-    <span>
-      {{ songDuration | minuteSeconds }}
-    </span>
   </div>
 </div>
 <app-youtube-player
