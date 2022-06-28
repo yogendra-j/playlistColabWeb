@@ -42,7 +42,6 @@ export class TooltipComponent implements OnInit {
       const progressBarTime = this.songDuration * progressBarPercent;
       const progressBarTimeFormatted =
         this.formatToMinSecPipe.transform(progressBarTime);
-      console.log(progressBarTimeFormatted, 'progressBarTimeFormatted', progressBarTime);
       const tooltipElement = document.querySelector(
         '.tooltiptextProgressBar'
       ) as HTMLElement;

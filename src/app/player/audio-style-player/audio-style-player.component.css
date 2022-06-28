@@ -12,9 +12,9 @@
 .mat-slider{
   cursor: pointer;
 }
-.volumn-control:not(:hover)  .volumn-slider {
+/* .volumn-control:not(:hover)  .volumn-slider {
   display: none;
- }
+ } */
 .fit-content-width{
   max-width: fit-content;
 }

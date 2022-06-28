@@ -3,5 +3,6 @@ export class Song {
     thumbnailUrlLow!: string;
     thumbnailUrlMedium!: string;
     videoId!: string;
+    index!: number;
 
 }

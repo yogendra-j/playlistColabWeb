@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" [ngClass]="{'scrollWithFooter': !!currentPlayerState?.songInPlayer, 'scrollWithoutFooter': !currentPlayerState?.songInPlayer}">
   <div
     *ngFor="let song of songsList | async"
     class="row mb-2 border-bottom p-2 songRow"
@@ -12,16 +12,18 @@
       />
     </div>
     <div class="col-10 row align-self-around">
-      <div class="col-12">
+      <div class="col-12 ps-0">
         {{ song.title }}
       </div>
       <!-- play icon -->
-      <div (click)="playSong(song)"
+      <div class="iconDiv"
+        (click)="playSong(song)"
         *ngIf="
-          !(currentPlayerState?.songInPlayer?.videoId == song.videoId) || currentPlayerState?.isPaused
+          !(currentPlayerState?.songInPlayer?.videoId == song.videoId) ||
+          currentPlayerState?.isPaused
         "
       >
-        <svg
+        <svg class="icon"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           version="1.1"
@@ -31,8 +33,6 @@
           viewBox="0 0 502.119 502.119"
           style="enable-background: new 0 0 502.119 502.119"
           xml:space="preserve"
-          width="40"
-          height="40"
         >
           <g>
             <g>
@@ -58,8 +58,14 @@
         </svg>
       </div>
       <!-- pause icon -->
-      <div (click)="pauseSong()" *ngIf="(currentPlayerState?.songInPlayer?.videoId == song.videoId) && currentPlayerState?.isPlaying">
-        <svg
+      <div class="iconDiv"
+        (click)="pauseSong()"
+        *ngIf="
+          currentPlayerState?.songInPlayer?.videoId == song.videoId &&
+          currentPlayerState?.isPlaying
+        "
+      >
+        <svg class="icon"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           version="1.1"
@@ -69,8 +75,6 @@
           viewBox="0 0 502 502"
           style="enable-background: new 0 0 502 502"
           xml:space="preserve"
-          width="40"
-          height="40"
         >
           <g>
             <g>
@@ -105,30 +109,25 @@
         </svg>
       </div>
       <!-- loading -->
-      <div
-        *ngIf="(currentPlayerState?.songInPlayer?.videoId == song.videoId) && currentPlayerState?.isLoading"
+      <div class="iconDiv"
+        *ngIf="
+          currentPlayerState?.songInPlayer?.videoId == song.videoId &&
+          currentPlayerState?.isLoading
+        "
         class="spinner-border text-info"
         role="status"
       >
         <span class="visually-hidden">Loading...</span>
       </div>
-      <div class="col-11">
-        <!-- delete icon -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-trash"
-          viewBox="0 0 16 16"
-        >
+      <div class="iconDiv" (click)="addToQueue(song)">
+        <!-- add to queue icon -->
+        <svg class="icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h48v48H0z" fill="none"></path>
           <path
-            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-          />
-          <path
-            fill-rule="evenodd"
-            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-          />
+            d="M30 12H6v4h24v-4zm0 8H6v4h24v-4zM6 32h16v-4H6v4zm28-20v16.37c-.63-.23-1.29-.37-2-.37-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6V16h6v-4H34z"
+            fill="#4d93e8"
+            class="fill-000000"
+          ></path>
         </svg>
       </div>
     </div>

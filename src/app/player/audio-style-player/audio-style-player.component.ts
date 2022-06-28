@@ -36,10 +36,20 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
         this.updateProgressBar();
       })
     );
+    this.subscriptions.push(
+      this.songService.songAddedToQueue.subscribe((song: Song) => {
+        this.addToQueue(song);
+      })
+    );
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  addToQueue(song: Song) {
+    song.index = this.queuedSongs.length;
+    this.queuedSongs.push(song);
   }
 
   private handlePressPauseInSongsList() {
@@ -56,6 +66,8 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
         this.playPauseVideo();
         return;
       }
+      song.index = 0;
+      this.queuedSongs = [song];
       this.currenlyPlaying = song;
       if (this.isPlayerReady) {
         this.youtubePlayer.loadVideoById(song.videoId); //load new song
@@ -68,7 +80,10 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
   handlePlayerStateChange(event: YT.PlayerState) {
     if (event === YT.PlayerState.CUED) {
       return;
+    } else if (event === YT.PlayerState.ENDED) {
+      this.playNextSong();
     }
+
     this.songService.currentPlayerState.emit({
       isPlaying: this.isPlayerReady && event === YT.PlayerState.PLAYING,
       isPaused:
@@ -81,6 +96,24 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
     });
 
     this.currentPlayerState = event;
+  }
+  playNextSong() {
+    if (this.queuedSongs.length === this.currenlyPlaying.index + 1) {
+      return;
+    }
+    this.currenlyPlaying = this.queuedSongs[this.currenlyPlaying.index + 1];
+    this.youtubePlayer.loadVideoById(this.currenlyPlaying.videoId);
+    this.youtubePlayer.playVideo();
+    this.songDuration = this.youtubePlayer.getDuration();
+  }
+  playPreviousSong() {
+    if (this.currenlyPlaying.index === 0) {
+      return;
+    }
+    this.currenlyPlaying = this.queuedSongs[this.currenlyPlaying.index - 1];
+    this.youtubePlayer.loadVideoById(this.currenlyPlaying.videoId);
+    this.youtubePlayer.playVideo();
+    this.songDuration = this.youtubePlayer.getDuration();
   }
 
   playPauseVideo() {

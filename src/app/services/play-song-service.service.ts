@@ -9,6 +9,7 @@ import { Song } from '../models/song';
 export class PlaySongServiceService {
 
   songToPlayNow = new EventEmitter<Song>();
+  songAddedToQueue = new EventEmitter<Song>();
   pauseSong = new EventEmitter<boolean>();
   currentPlayerState = new EventEmitter<CurrentPlayerState>();
   constructor() { }

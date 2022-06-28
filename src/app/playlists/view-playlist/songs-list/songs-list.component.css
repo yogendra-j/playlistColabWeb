@@ -7,3 +7,16 @@
 .songRow.selected:hover{
     background-color: #ffc0cb;
 }
+.icon{
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+.icon:hover{
+  opacity: 0.5;
+}
+.iconDiv{
+  max-width: fit-content;
+  padding: 0%;
+  margin-right: 2rem;
+}

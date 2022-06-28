@@ -37,5 +37,7 @@ export class SongsListComponent implements OnInit {
   pauseSong(){
     this.songService.pauseSong.emit(true);
   }
-
+  addToQueue(song: Song) {
+    this.songService.songAddedToQueue.emit(song);
+  }
 }

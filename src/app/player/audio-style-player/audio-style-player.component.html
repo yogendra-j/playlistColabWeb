@@ -1,6 +1,6 @@
-<div class="container-fluid d-flex align-items-center ps-0">
+<div class="container-fluid d-flex align-items-center ps-0 row">
   <!-- song thubnail and name -->
-  <div class="song-info d-flex align-items-center ml-0">
+  <div class="song-info d-flex align-items-center ml-0 col-4">
     <img
       class="song-thumbnail me-2"
       src="{{ currenlyPlaying?.thumbnailUrlLow }}"
@@ -9,10 +9,10 @@
     <div class="song-name">{{ currenlyPlaying?.title }}</div>
   </div>
   <!-- middle part -->
-  <div class="middle-controls container align-items-center justify-content-center mx-4 px-4">
+  <div class="middle-controls container align-items-center justify-content-center mx-4 px-4 col-6">
     <div class="track-controls row justify-content-center">
       <!-- prev -->
-      <a class="btn fit-content-width" *ngIf="isPlayerReady"
+      <a (click)="playPreviousSong()" class="btn fit-content-width" *ngIf="isPlayerReady"
         ><svg
           class="songBarIcon"
           xmlns="http://www.w3.org/2000/svg"
@@ -126,14 +126,12 @@
         </svg>
       </a>
       <!-- plsy/pause controls -->
-      <a class="btn fit-content-width mx-3" type="button" (click)="playPauseVideo()">
+      <a class="btn fit-content-width mx-3" type="button" (click)="playPauseVideo()" [attr.disabled]="!isPlayerReady || currentPlayerState === 3">
         <!-- play icon -->
         <div
           class="songBarIcon"
           *ngIf="
-            isPlayerReady &&
-            currentPlayerState !== 3 &&
-            currentPlayerState !== 1
+          !(isPlayerReady && currentPlayerState === 1)
           "
         >
           <svg
@@ -220,17 +218,9 @@
             </g>
           </svg>
         </div>
-        <!-- loading -->
-        <div
-          *ngIf="!isPlayerReady || currentPlayerState === 3"
-          class="spinner-border text-info songBarIcon"
-          role="status"
-        >
-          <span class="visually-hidden">Loading...</span>
-        </div>
       </a>
       <!-- next -->
-      <a class="btn fit-content-width" *ngIf="isPlayerReady"
+      <a (click)="playNextSong()" class="btn fit-content-width" *ngIf="isPlayerReady"
         >
         <svg class="songBarIcon"
           xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +294,7 @@
     </div>
   </div>
   <!-- volumn -->
-  <div class="volumn-control d-flex align-items-center mx-4">
+  <div class="volumn-control align-items-center d-flex mx-4 col-1">
     <a (click)="toggleVolumn()">
       <svg
         class="volumn-control-icon"
