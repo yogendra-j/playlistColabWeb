@@ -9,7 +9,7 @@ import { GoogleApiService } from 'src/app/services/google-login.service';
 })
 export class GoogleLoginComponent implements OnInit {
 
-  constructor(public readonly googleApi: GoogleApiService, private readonly router: Router) { 
+  constructor(public readonly googleApi: GoogleApiService, private readonly router: Router) {
   }
 
   ngOnInit(): void {

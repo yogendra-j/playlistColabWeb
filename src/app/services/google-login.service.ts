@@ -2,6 +2,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { GoogleLogin } from '../models/googleLogin';
+import { AuthService } from './auth.service';
+import { ServiceProxyService } from './service-proxy.service';
 
 const authCodeFlowConfig: AuthConfig = {
   // Url of the Identity Provider
@@ -18,7 +21,7 @@ const authCodeFlowConfig: AuthConfig = {
   clientId: '224679154028-ud01v61e84727uf9q8iavpucq01ntq77.apps.googleusercontent.com',
 
   // set the scope for the permissions the client should request
-  scope: 'openid profile email https://www.googleapis.com/auth/gmail.readonly',
+  scope: 'email profile',
 
   showDebugInformation: true,
 
@@ -38,7 +41,9 @@ export interface UserInfo {
 })
 export class GoogleApiService {
 
-  constructor(private readonly oAuthService: OAuthService, private readonly router: Router) {
+  constructor(private readonly oAuthService: OAuthService, private readonly router: Router,
+    private readonly serviceProxy: ServiceProxyService,
+    private readonly authService: AuthService) {
   }
   loginUrl = "/login/google";
 
@@ -63,7 +68,14 @@ export class GoogleApiService {
         if (!this.oAuthService.hasValidAccessToken()) {
           this.oAuthService.initLoginFlow();
         } else {
-          this.router.navigate([""])
+          const id = this.oAuthService.getIdToken();
+          debugger
+          this.serviceProxy.googleLoginApi(id).subscribe(
+            token => {
+            this.authService.setJwtToken(token);
+            this.router.navigate([""]);
+            }
+          );
         }
       });
     });
@@ -75,11 +87,5 @@ export class GoogleApiService {
 
   signOut() {
     this.oAuthService.logOut()
-  }
-
-  private authHeader(): HttpHeaders {
-    return new HttpHeaders({
-      'Authorization': `Bearer ${this.oAuthService.getAccessToken()}`
-    })
   }
 }

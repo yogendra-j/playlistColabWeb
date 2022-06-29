@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddSongsDto } from '../models/addSongsDto';
+import { GoogleLogin } from '../models/googleLogin';
 import { LoginResult } from '../models/loginResult';
 import { Playlist } from '../models/playlist';
 import { Song } from '../models/song';
@@ -17,6 +18,10 @@ const options = { headers: new HttpHeaders().set('Content-Type', 'application/js
 export class ServiceProxyService {
 
   constructor(private readonly httpClient: HttpClient) { }
+
+  googleLoginApi(id_token: string) {
+    return this.httpClient.post<LoginResult>(baseUrl + '/google/signin?idToken=' + id_token, options);
+  }
 
   loginApi(user: UserLogin) {
     return this.httpClient.post<LoginResult>(baseUrl + '/signin', user, options)
