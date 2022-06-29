@@ -19,6 +19,14 @@ export class ServiceProxyService {
 
   constructor(private readonly httpClient: HttpClient) { }
 
+  getSoptifyTokenByCode(code: string) {
+    return this.httpClient.post(baseUrl + `/spotify/accesstoken?code=${code}`, options);
+  }
+
+  getSoptifyToken() {
+    return this.httpClient.get(baseUrl + `/spotify/accesstoken`);
+  }
+
   googleLoginApi(id_token: string) {
     return this.httpClient.post<LoginResult>(baseUrl + '/google/signin?idToken=' + id_token, options);
   }
