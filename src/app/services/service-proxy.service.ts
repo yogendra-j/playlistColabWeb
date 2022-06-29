@@ -59,6 +59,14 @@ export class ServiceProxyService {
     return this.httpClient.get<Song[]>(baseUrl + '/youtube/' + playlistId).pipe(tap(data => localStorage.setItem(playlistId, JSON.stringify(data))));
   }
 
+  getSongsFromSpotifyPlaylist(playlistId: string) {
+    let cachedSongs = localStorage.getItem(playlistId);
+    if (cachedSongs) {
+      return of(JSON.parse(cachedSongs));
+    }
+    return this.httpClient.get<Song[]>(baseUrl + '/spotify/' + playlistId).pipe(tap(data => localStorage.setItem(playlistId, JSON.stringify(data))));
+  }
+
   addSongsToPlaylistApi(playlistId: number, addNewSongs: AddSongsDto) {
     return this.httpClient.post<Playlist>(baseUrl + '/playlists/' + playlistId + '/songs', addNewSongs, options);
   }

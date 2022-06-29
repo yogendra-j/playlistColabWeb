@@ -11,25 +11,28 @@ import { ServiceProxyService } from 'src/app/services/service-proxy.service';
   styleUrls: ['./add-songs.component.css']
 })
 export class AddSongsComponent implements OnInit {
-  
+
   searchUrl!: string;
   songsList: Observable<Song[]> = of([]);
   songsToAdd = new Map<string, Song>();
-  
+
   constructor(private readonly serviceProxy: ServiceProxyService) { }
-  
+
   ngOnInit(): void {
   }
-  
+
   getSongsFromUrl(){
     if (this.searchUrl.includes('youtube.com/watch?v=')){
       console.log(this.searchUrl.split('youtube.com/watch?v=')[1]);
     } else if (this.searchUrl.includes('youtube.com/playlist?list=')){
       let plsylistId = this.searchUrl.split('youtube.com/playlist?list=')[1];
       this.songsList = this.serviceProxy.getSongsFromYoutubePlaylist(plsylistId);
+    } else if (this.searchUrl.includes('https://open.spotify.com/playlist/')){
+      let playlistId = this.searchUrl.split('https://open.spotify.com/playlist/')[1];
+      this.songsList = this.serviceProxy.getSongsFromSpotifyPlaylist(playlistId);
     }
   }
-  
+
   toggleSelectionForSong(song: Song){
     if (this.songsToAdd.has(song.videoId)){
       this.songsToAdd.delete(song.videoId);
@@ -37,7 +40,7 @@ export class AddSongsComponent implements OnInit {
       this.songsToAdd.set(song.videoId, song);
     }
   }
-   
+
   addSongsToPlaylist(playlistId: number) {
     let songsToAddDto = new AddSongsDto();
     songsToAddDto.songs = Array.from(this.songsToAdd.values());
