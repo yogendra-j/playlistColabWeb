@@ -7,7 +7,7 @@
 <button type="button" class="btn btn-primary d-none" #openModalButton data-bs-toggle="modal" data-bs-target="#addSongsModal">
     Add new playlist
   </button>
-  
+
 <!-- Modal -->
 <div class="modal fade" id="addSongsModal" tabindex="-1" aria-labelledby="addSongsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -21,7 +21,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" #closeModalButton data-bs-dismiss="modal">Close</button>
-                <button type="button" (click)="addSongsToPlaylist()" class="btn btn-primary">Save playlist</button>
+                <button type="button" (click)="addSongsToPlaylist()" class="btn btn-primary">Add to playlist</button>
+                <button type="button" (click)="addAllSongsToPlaylist()" class="btn btn-primary">Add all to playlist</button>
             </div>
         </div>
     </div>

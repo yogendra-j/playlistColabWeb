@@ -2,6 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { of, tap } from 'rxjs';
 import { GoogleLogin } from '../models/googleLogin';
 import { AuthService } from './auth.service';
 import { ServiceProxyService } from './service-proxy.service';
@@ -46,7 +47,22 @@ export class GoogleApiService {
     private readonly authService: AuthService) {
   }
   loginUrl = "/login/google";
+  googleToken = "";
+  googleExpiresAt = 0;
 
+  getAccessTokenByCode(code: string) {
+    return this.serviceProxy
+      .getGoogleTokenByCode(code)
+      .pipe(tap((token: any) => {this.googleToken, this.googleExpiresAt = token.access_token, token.expires_in}));
+  }
+
+  getAccessToken(){
+    if (this.googleToken && this.googleExpiresAt > Date.now()) {
+      return of(this.googleToken);
+    } else {
+      return this.serviceProxy.getGoogleToken().pipe(tap((token: any) => {this.googleToken, this.googleExpiresAt = token.access_token, token.expires_in}));
+    }
+  }
 
   tryGoogleLogin() {
     // confiure oauth2 service
@@ -81,8 +97,31 @@ export class GoogleApiService {
     });
   }
 
+  tryConnection(){
+    let client_id = '224679154028-ud01v61e84727uf9q8iavpucq01ntq77.apps.googleusercontent.com';
+    let redirect_uri = window.location.origin + this.loginUrl;
+
+    let scope = 'youtube.readonly';
+
+    let url =
+      'https://accounts.google.com/o/oauth2/v2/auth?' +
+      'response_type=code' +
+      '&' +
+      'client_id=' +
+      client_id +
+      '&' +
+      'scope=' +
+      'https://www.googleapis.com/auth/youtube.readonly' +
+      '&' +
+      'redirect_uri=' +
+      redirect_uri +
+      '&' +
+      'access_type=offline';
+    window.location.href = url;
+  }
+
   isLoggedIn(): boolean {
-    return this.oAuthService.hasValidAccessToken()
+    return this.authService.isJwtTokenValid();
   }
 
   signOut() {

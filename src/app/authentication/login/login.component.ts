@@ -40,4 +40,8 @@ export class LoginComponent implements OnInit {
     else this.serviceProxy.signUpApi(this.user).subscribe(x => console.log(x));
   }
 
+  loginWithGoogle() {
+    this.router.navigate(["/login/google"]);
+  }
+
 }

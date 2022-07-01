@@ -50,5 +50,13 @@ export class ViewPlaylistComponent implements OnInit {
       this.closeAddSongsModal();
     });
   }
+  addAllSongsToPlaylist(){
+    this.addSongsComponent.addAllSongsToPlaylist(this.playlistId)
+    .subscribe(result => {
+      this.playlist = result;
+      this.songs = of(result.songs);
+      this.closeAddSongsModal();
+    });
+  }
 
 }

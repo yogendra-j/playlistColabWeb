@@ -22,9 +22,15 @@ export class ServiceProxyService {
   getSoptifyTokenByCode(code: string) {
     return this.httpClient.post(baseUrl + `/spotify/accesstoken?code=${code}`, options);
   }
+  getGoogleTokenByCode(code: string) {
+    return this.httpClient.post(baseUrl + `/youtube/accesstoken?code=${code}`, options);
+  }
 
   getSoptifyToken() {
     return this.httpClient.get(baseUrl + `/spotify/accesstoken`);
+  }
+  getGoogleToken() {
+    return this.httpClient.get(baseUrl + `/youtube/accesstoken`);
   }
 
   googleLoginApi(id_token: string) {
@@ -69,6 +75,10 @@ export class ServiceProxyService {
 
   addSongsToPlaylistApi(playlistId: number, addNewSongs: AddSongsDto) {
     return this.httpClient.post<Playlist>(baseUrl + '/playlists/' + playlistId + '/songs', addNewSongs, options);
+  }
+
+  getYoutubeSongFromSpotifyQuery(spotifySong: Song) {
+    return this.httpClient.get<Song>(baseUrl + `/youtube/spotify?spotifySongQuery=${spotifySong.songQuery}`, options);
   }
 
 }

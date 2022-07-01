@@ -3,6 +3,8 @@ import { Observable, of } from 'rxjs';
 import { CurrentPlayerState } from 'src/app/models/currentPlayerState';
 import { Song } from 'src/app/models/song';
 import { PlaySongServiceService } from 'src/app/services/play-song-service.service';
+import { SongProviderEnum } from 'src/app/models/SongProviderEnum';
+import { ServiceProxyService } from 'src/app/services/service-proxy.service';
 
 @Component({
   selector: 'app-songs-list',
@@ -14,8 +16,11 @@ export class SongsListComponent implements OnInit {
   @Input() allowSelection = false;
   @Output() toggleSelectionForSong = new EventEmitter<Song>();
   currentPlayerState!: CurrentPlayerState;
-  constructor(private readonly songService: PlaySongServiceService) {}
-
+  constructor(
+    private readonly songService: PlaySongServiceService,
+    private readonly serviceProxy: ServiceProxyService
+  ) {}
+  readonly SongProviderEnumLocal = SongProviderEnum;
   ngOnInit(): void {
     this.songService.currentPlayerState.subscribe(
       (state) => (this.currentPlayerState = state)
@@ -34,10 +39,22 @@ export class SongsListComponent implements OnInit {
     this.songService.songToPlayNow.emit(song);
   }
 
-  pauseSong(){
+  pauseSong() {
     this.songService.pauseSong.emit(true);
   }
   addToQueue(song: Song) {
     this.songService.songAddedToQueue.emit(song);
+  }
+  convertToYouTube(song: Song) {
+    this.serviceProxy.getYoutubeSongFromSpotifyQuery(song).subscribe((data) => {
+      song.videoId = data.videoId;
+      song.title = data.title;
+      song.thumbnailUrlLow = data.thumbnailUrlLow;
+      song.thumbnailUrlMedium = data.thumbnailUrlMedium;
+      song.songProvider = SongProviderEnum.YOUTUBE;
+    });
+  }
+  isYoutubeSong(song: Song) {
+    return song.songProvider.valueOf() === SongProviderEnum.YOUTUBE.valueOf();
   }
 }

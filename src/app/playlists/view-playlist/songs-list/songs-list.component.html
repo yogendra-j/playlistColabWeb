@@ -18,9 +18,9 @@
       <!-- play icon -->
       <div class="iconDiv"
         (click)="playSong(song)"
-        *ngIf="
-          !(currentPlayerState?.songInPlayer?.videoId == song.videoId) ||
-          currentPlayerState?.isPaused
+        *ngIf="(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf()) &&
+         ( !(currentPlayerState?.songInPlayer?.videoId == song.videoId) ||
+          currentPlayerState?.isPaused)
         "
       >
         <svg class="icon"
@@ -60,9 +60,9 @@
       <!-- pause icon -->
       <div class="iconDiv"
         (click)="pauseSong()"
-        *ngIf="
-          currentPlayerState?.songInPlayer?.videoId == song.videoId &&
-          currentPlayerState?.isPlaying
+        *ngIf="(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf()) &&
+          (currentPlayerState?.songInPlayer?.videoId == song.videoId &&
+          currentPlayerState?.isPlaying)
         "
       >
         <svg class="icon"
@@ -110,16 +110,16 @@
       </div>
       <!-- loading -->
       <div class="iconDiv"
-        *ngIf="
-          currentPlayerState?.songInPlayer?.videoId == song.videoId &&
-          currentPlayerState?.isLoading
+        *ngIf="(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf()) &&
+          (currentPlayerState?.songInPlayer?.videoId == song.videoId &&
+          currentPlayerState?.isLoading)
         "
         class="spinner-border text-info"
         role="status"
       >
         <span class="visually-hidden">Loading...</span>
       </div>
-      <div class="iconDiv" (click)="addToQueue(song)">
+      <div *ngIf="(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf())" class="iconDiv" (click)="addToQueue(song)">
         <!-- add to queue icon -->
         <svg class="icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0h48v48H0z" fill="none"></path>
@@ -130,6 +130,9 @@
           ></path>
         </svg>
       </div>
+      <!-- convert to youtbe for spotify trcaks -->
+      <div class="iconDiv" *ngIf="!(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf())" (click)="convertToYouTube(song)">
+        <button>convert to youtube</button>
     </div>
   </div>
 </div>
