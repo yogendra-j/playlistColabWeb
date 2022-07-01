@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { interval } from 'rxjs/internal/observable/interval';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -25,17 +25,22 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly songService: PlaySongServiceService,
-    private formatToMinSecPipe: MinuteSecondsPipe
+    private formatToMinSecPipe: MinuteSecondsPipe,
+    private zone: NgZone,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.handlePressPlayInSongsList();
     this.handlePressPauseInSongsList();
-    this.subscriptions.push(
-      this.intervallTimer.subscribe(() => {
-        this.updateProgressBar();
-      })
-    );
+    this.zone.runOutsideAngular(() => {
+      this.subscriptions.push(
+        this.intervallTimer.subscribe(() => {
+          this.updateProgressBar();
+          this.changeDetectorRef.detectChanges();
+        })
+      );
+    });
     this.subscriptions.push(
       this.songService.songAddedToQueue.subscribe((song: Song) => {
         this.addToQueue(song);
@@ -160,5 +165,4 @@ export class AudioStylePlayerComponent implements OnInit, OnDestroy {
   formatLabel = (value: number) => {
     return this.formatToMinSecPipe.transform(value);
   };
-
 }
