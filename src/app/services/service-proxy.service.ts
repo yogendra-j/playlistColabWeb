@@ -81,4 +81,8 @@ export class ServiceProxyService {
     return this.httpClient.get<Song>(baseUrl + `/youtube/spotify?spotifySongQuery=${spotifySong.songQuery}`, options);
   }
 
+  deleteSongFromPlaylist(playlistId: Number, songId: string) {
+    return this.httpClient.delete<Song[]>(baseUrl + '/playlists/' + playlistId + '/songs/' + songId, options)
+  }
+
 }

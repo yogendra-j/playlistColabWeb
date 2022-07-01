@@ -1,6 +1,6 @@
 <div class="container-fluid row">
     <app-playlist-info [playlist]="playlist" (openAddSongsModal)="openAddSongsModal()" class="col-3"></app-playlist-info>
-    <app-songs-list [songsList]="songs" class="col-9"></app-songs-list>
+    <app-songs-list [songsList]="songs" (deleteSong)="deleteSong($event)" class="col-9"></app-songs-list>
 </div>
 
 <!-- Button trigger modal -->

@@ -13,8 +13,9 @@ import { ServiceProxyService } from 'src/app/services/service-proxy.service';
 })
 export class SongsListComponent implements OnInit {
   @Input() songsList: Observable<Song[]> = of([]);
-  @Input() allowSelection = false;
+  @Input() isAddSongsView = false;
   @Output() toggleSelectionForSong = new EventEmitter<Song>();
+  @Output() deleteSong = new EventEmitter<Song>();
   currentPlayerState!: CurrentPlayerState;
   constructor(
     private readonly songService: PlaySongServiceService,
@@ -28,7 +29,7 @@ export class SongsListComponent implements OnInit {
   }
 
   toggleSelection(song: Song, event: Event) {
-    if (!this.allowSelection) {
+    if (!this.isAddSongsView) {
       return;
     }
     (event.currentTarget as Element).classList.toggle('selected');
@@ -57,4 +58,5 @@ export class SongsListComponent implements OnInit {
   isYoutubeSong(song: Song) {
     return song.songProvider.valueOf() === SongProviderEnum.YOUTUBE.valueOf();
   }
+
 }

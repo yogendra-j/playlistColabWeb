@@ -1,4 +1,10 @@
-<div class="container-fluid" [ngClass]="{'scrollWithFooter': !!currentPlayerState?.songInPlayer, 'scrollWithoutFooter': !currentPlayerState?.songInPlayer}">
+<div
+  class="container-fluid"
+  [ngClass]="{
+    scrollWithFooter: !!currentPlayerState?.songInPlayer,
+    scrollWithoutFooter: !currentPlayerState?.songInPlayer
+  }"
+>
   <div
     *ngFor="let song of songsList | async"
     class="row mb-2 border-bottom p-2 songRow"
@@ -16,14 +22,18 @@
         {{ song.title }}
       </div>
       <!-- play icon -->
-      <div class="iconDiv"
+      <div
+        class="iconDiv"
         (click)="playSong(song)"
-        *ngIf="(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf()) &&
-         ( !(currentPlayerState?.songInPlayer?.videoId == song.videoId) ||
-          currentPlayerState?.isPaused)
+        *ngIf="
+          song.songProvider.valueOf() ===
+            SongProviderEnumLocal.YOUTUBE.valueOf() &&
+          (!(currentPlayerState?.songInPlayer?.videoId == song.videoId) ||
+            currentPlayerState?.isPaused)
         "
       >
-        <svg class="icon"
+        <svg
+          class="icon"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           version="1.1"
@@ -58,14 +68,18 @@
         </svg>
       </div>
       <!-- pause icon -->
-      <div class="iconDiv"
+      <div
+        class="iconDiv"
         (click)="pauseSong()"
-        *ngIf="(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf()) &&
-          (currentPlayerState?.songInPlayer?.videoId == song.videoId &&
-          currentPlayerState?.isPlaying)
+        *ngIf="
+          song.songProvider.valueOf() ===
+            SongProviderEnumLocal.YOUTUBE.valueOf() &&
+          currentPlayerState?.songInPlayer?.videoId == song.videoId &&
+          currentPlayerState?.isPlaying
         "
       >
-        <svg class="icon"
+        <svg
+          class="icon"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           version="1.1"
@@ -109,19 +123,33 @@
         </svg>
       </div>
       <!-- loading -->
-      <div class="iconDiv"
-        *ngIf="(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf()) &&
-          (currentPlayerState?.songInPlayer?.videoId == song.videoId &&
-          currentPlayerState?.isLoading)
+      <div
+        class="iconDiv"
+        *ngIf="
+          song.songProvider.valueOf() ===
+            SongProviderEnumLocal.YOUTUBE.valueOf() &&
+          currentPlayerState?.songInPlayer?.videoId == song.videoId &&
+          currentPlayerState?.isLoading
         "
         class="spinner-border text-info"
         role="status"
       >
         <span class="visually-hidden">Loading...</span>
       </div>
-      <div *ngIf="(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf())" class="iconDiv" (click)="addToQueue(song)">
+      <div
+        *ngIf="
+          song.songProvider.valueOf() ===
+          SongProviderEnumLocal.YOUTUBE.valueOf()
+        "
+        class="iconDiv"
+        (click)="addToQueue(song)"
+      >
         <!-- add to queue icon -->
-        <svg class="icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="icon"
+          viewBox="0 0 48 48"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path d="M0 0h48v48H0z" fill="none"></path>
           <path
             d="M30 12H6v4h24v-4zm0 8H6v4h24v-4zM6 32h16v-4H6v4zm28-20v16.37c-.63-.23-1.29-.37-2-.37-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6V16h6v-4H34z"
@@ -131,8 +159,74 @@
         </svg>
       </div>
       <!-- convert to youtbe for spotify trcaks -->
-      <div class="iconDiv" *ngIf="!(song.songProvider.valueOf() === SongProviderEnumLocal.YOUTUBE.valueOf())" (click)="convertToYouTube(song)">
+      <div
+        class="iconDiv"
+        *ngIf="
+          !(
+            song.songProvider.valueOf() ===
+            SongProviderEnumLocal.YOUTUBE.valueOf()
+          )
+        "
+        (click)="convertToYouTube(song)"
+      >
         <button>convert to youtube</button>
+      </div>
+      <!-- delete song  -->
+      <div *ngIf="!isAddSongsView" class="iconDiv ms-auto" (click)="deleteSong.emit(song)">
+        <!-- delete icon -->
+        <svg class="icon"
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 284.014 284.014"
+          style="enable-background: new 0 0 284.014 284.014"
+          xml:space="preserve"
+        >
+          <g id="XMLID_28_">
+            <g>
+              <path
+                style="fill: #16a085"
+                d="M227.157,84.284c4.69,2.23,6.7,7.86,4.47,12.55l-2.88,6.06l-145.69-69.19l2.88-6.06
+           c2.23-4.7,7.87-6.7,12.56-4.47L227.157,84.284z"
+              />
+              <path
+                style="fill: #1abc9c"
+                d="M181.687,102.724l-12.24,146.88c-0.67,8.08-7.55,14.41-15.66,14.41h-73.54
+           c-8.1,0-14.98-6.33-15.65-14.41l-12.24-146.88H181.687z"
+              />
+              <path
+                d="M235.737,66.214c14.65,6.96,20.91,24.55,13.95,39.2l-7.16,15.09c-1.72,3.61-5.3,5.72-9.04,5.72
+           c-1.44,0-2.9-0.31-4.29-0.97l-28.2-13.4l-11.62,139.41c-1.53,18.36-17.16,32.75-35.59,32.75h-73.54
+           c-18.42,0-34.05-14.39-35.58-32.75l-13.15-157.71c-0.23-2.78,0.72-5.54,2.61-7.6s4.56-3.23,7.36-3.23h98.18l-74.22-35.25
+           c-2.39-1.13-4.24-3.18-5.13-5.68c-0.89-2.49-0.75-5.24,0.39-7.64l7.17-15.09c6.96-14.66,24.54-20.92,39.2-13.96l28,13.3l1.46-3.05
+           c3.07-6.48,8.49-11.38,15.25-13.79c6.76-2.4,14.05-2.03,20.53,1.05l24.13,11.45c13.37,6.36,19.09,22.41,12.74,35.79l-1.46,3.06
+           L235.737,66.214z M231.627,96.834c2.23-4.69,0.22-10.32-4.47-12.55l-128.66-61.11c-4.69-2.23-10.33-0.23-12.56,4.47l-2.88,6.06
+           l145.69,69.19L231.627,96.834z M191.117,41.274c1.62-3.42,0.16-7.52-3.26-9.14l-24.12-11.46c-1.65-0.78-3.51-0.88-5.24-0.26
+           c-1.73,0.61-3.11,1.86-3.9,3.52l-1.45,3.05l36.52,17.35L191.117,41.274z M169.447,249.604l12.24-146.88H52.357l12.24,146.88
+           c0.67,8.08,7.55,14.41,15.65,14.41h73.54C161.897,264.014,168.777,257.684,169.447,249.604z"
+              />
+            </g>
+          </g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+        </svg>
+      </div>
     </div>
   </div>
 </div>
