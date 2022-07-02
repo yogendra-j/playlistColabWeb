@@ -5,10 +5,10 @@ const path = require('path');
 const app = express();
 
 // Serve only the static files form the dist directory
-app.use(express.static('./dist/playlistColab'));
+app.use(express.static(__dirname + '/dist/playlist-colab'));
 
 app.get('/*', (req, res) =>
-    res.sendFile('index.html', {root: 'dist/playlistColab/'}),
+res.sendFile(path.join(__dirname + '/dist/playlist-colab/index.html'))
 );
 
 // Start the app by listening on the default Heroku port
