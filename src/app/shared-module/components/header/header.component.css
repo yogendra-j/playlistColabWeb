@@ -1,0 +1,9 @@
+mat-toolbar {
+  height: fit-content;
+}
+.logo {
+  height: 40px;
+}
+.header{
+  background: #181818;
+}

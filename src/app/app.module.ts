@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { JwtInterceptor } from './httpInterceptor/jwt.interceptor';
 import { PlayerModule } from './player/player.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModuleModule } from './shared-module/shared-module.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PlayerModule,
     OAuthModule.forRoot(),
     BrowserAnimationsModule,
+    SharedModuleModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
